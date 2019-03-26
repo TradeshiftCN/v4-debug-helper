@@ -27,7 +27,10 @@ const getRedirectUrl = sourceUrl => {
 
 const insertConfig = (html, configScript, redirectIndex) => {
     const $ = cheerio.load(html, {xmlMode: true});
-    $('body').prepend(configScript);
+    // 在 v4/config/webpack/webpack.config.dev.js 中开启了 dynamicPublicPath
+    // 并且 __config.CDN_URL 在 v4/src/client/globals.js 中修改了 __webpack_public_path__ 
+    // 导致 hmr 地址不正确
+    $('body').prepend(configScript.replace(/"CDN_URL":"[^"]*"/, `"CDN_URL":"${redirectIndex}"`));
     $('*').each((index, element) => {
         if (element.name === 'script') {
             const attrSrc = $(element).attr('src');
