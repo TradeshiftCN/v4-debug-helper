@@ -15,7 +15,8 @@ Node: `>=8, <9`
 ### nvm 
 [install nvm ](https://github.com/creationix/nvm)
 
-**Note**:if zsh has been installed in your Mac,you need to install nvm as follow. 
+:bulb:
+ Note: If zsh has been set as default shell on your Mac( echo $0 will see which shell you are using ), you need to install nvm as follow: 
 ```
 curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.34.0/install.sh | zsh
 ```
