@@ -12,6 +12,13 @@
 
 Node: `>=8, <9`
 
+### nvm 
+[install nvm ](https://github.com/creationix/nvm)
+
+**Note**:if zsh has been installed in your Mac,you need to install nvm as follow. 
+```
+curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.34.0/install.sh | zsh
+```
 #### bash
 
 ##### Automatically call `nvm use`
