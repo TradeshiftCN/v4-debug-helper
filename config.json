@@ -20,6 +20,7 @@
       "FapiaoScanAP",
       "FapiaoLookupConfig",
       "FapiaoIssue",
+      "Proforma",
       "ProformaManagerAP",
       "ProformaManagerAR",
       "RematchDemo",
