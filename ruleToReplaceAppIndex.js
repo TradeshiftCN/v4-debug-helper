@@ -52,6 +52,10 @@ module.exports = {
 
         if(hackUrlReg.test(requestDetail.url)) {
             const redirectIndex = getRedirectUrl(requestDetail.url)
+            // DEFAULT 对应的是 APP，如果没有启动 APP 则不需要代理
+            if(!redirectIndex) {
+              return 
+            }
             const newResponse = responseDetail.response;
             const body = newResponse.body.toString();
             const originalConfigScript = getConfigScript(body);
