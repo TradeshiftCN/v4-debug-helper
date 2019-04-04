@@ -1,38 +1,48 @@
 {
   "redirectV4AppIndexUrl": {
-    "http://localhost:8321": [
-      "DEFAULT"
-    ],
-    "http://localhost:8844": [
-      "FapiaoManager",
-      "CNPayTenantAdmin",
-      "HealthCheck",
-      "FapiaoAuthentication",
-      "CNPayServiceMonitor",
-      "InvoiceDetailsInfo",
-      "InboundInvoiceEntry",
-      "FapiaoScanAR",
-      "FapiaoScanExpense",
-      "FapiaoLookupMonitor",
-      "NotificationCenter",
-      "FapiaoReport",
-      "SupplierInvoiceEntry",
-      "FapiaoScanAP",
-      "FapiaoLookupConfig",
-      "FapiaoIssue",
-      "Proforma",
-      "ProformaManagerAP",
-      "ProformaManagerAR",
-      "RematchDemo",
-      "PremadeInvoice",
-      "BillingProposal"
-    ],
-    "http://localhost:8102": [
-      "BrandhouseLogisticsManager",
-      "PriceComparison",
-      "ProductEnrichment",
-      "ResellerMarketplaceManager"
-    ]
+    "http://localhost:8321": {
+      "name": "Apps",
+      "shouldRedirectToLocal": true,
+      "apps": ["DEFAULT"]
+    },
+    "http://localhost:8844": {
+      "name": "cn-pay-apps",
+      "shouldRedirectToLocal": true,
+      "apps": [
+        "FapiaoManager",
+        "CNPayTenantAdmin",
+        "HealthCheck",
+        "FapiaoAuthentication",
+        "CNPayServiceMonitor",
+        "InvoiceDetailsInfo",
+        "InboundInvoiceEntry",
+        "FapiaoScanAR",
+        "FapiaoScanExpense",
+        "FapiaoLookupMonitor",
+        "NotificationCenter",
+        "FapiaoReport",
+        "SupplierInvoiceEntry",
+        "FapiaoScanAP",
+        "FapiaoLookupConfig",
+        "FapiaoIssue",
+        "Proforma",
+        "ProformaManagerAP",
+        "ProformaManagerAR",
+        "RematchDemo",
+        "PremadeInvoice",
+        "BillingProposal"
+      ]
+    },
+    "http://localhost:8102": {
+      "name": "cn-reseller-marketplace-apps",
+      "shouldRedirectToLocal": true,
+      "apps": [
+        "BrandhouseLogisticsManager",
+        "PriceComparison",
+        "ProductEnrichment",
+        "ResellerMarketplaceManager"
+      ]
+    }
   },
   "logRequestToConsole": false
 }

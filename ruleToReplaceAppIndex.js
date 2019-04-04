@@ -12,9 +12,11 @@ const getAppNameFromUrl = requestUrl => requestUrl.match(/Tradeshift\..+/)[0].re
 // 返回值类型是{'DEFAULT': 'redirect_url', appName: 'redirect_url', ...}
 const prepareRedirectData = () => {
     const appUrlMap = {};
-    Object.keys(config.redirectV4AppIndexUrl).forEach(url => {
-        config.redirectV4AppIndexUrl[url].forEach(appName => appUrlMap[appName] = url);
-    });
+    Object.keys(config.redirectV4AppIndexUrl)
+      .filter(url => config.redirectV4AppIndexUrl[url].shouldRedirectToLocal)
+      .forEach(url => {
+        config.redirectV4AppIndexUrl[url].apps.forEach(appName => appUrlMap[appName] = url);
+      });
     return appUrlMap;
 };
 
@@ -28,7 +30,7 @@ const getRedirectUrl = sourceUrl => {
 const insertConfig = (html, configScript, redirectIndex) => {
     const $ = cheerio.load(html, {xmlMode: true});
     // 在 v4/config/webpack/webpack.config.dev.js 中开启了 dynamicPublicPath
-    // 并且 __config.CDN_URL 在 v4/src/client/globals.js 中修改了 __webpack_public_path__ 
+    // 并且 __config.CDN_URL 在 v4/src/client/globals.js 中修改了 __webpack_public_path__
     // 导致 hmr 地址不正确
     $('body').prepend(configScript.replace(/"CDN_URL":"[^"]*"/, `"CDN_URL":"${redirectIndex}"`));
     $('*').each((index, element) => {
@@ -51,10 +53,10 @@ module.exports = {
     *beforeSendResponse(requestDetail, responseDetail) {
 
         if(hackUrlReg.test(requestDetail.url)) {
-            const redirectIndex = getRedirectUrl(requestDetail.url)
+            const redirectIndex = getRedirectUrl(requestDetail.url);
             // DEFAULT 对应的是 APP，如果没有启动 APP 则不需要代理
             if(!redirectIndex) {
-              return 
+              return;
             }
             const newResponse = responseDetail.response;
             const body = newResponse.body.toString();
@@ -71,7 +73,7 @@ module.exports = {
                 console.timeEnd(logStr);
                 return {response: newResponse};
             }).catch(err => {
-                console.error(`request ${redirectAppUrl} error: `, err.message)
+                console.error(`request ${redirectAppUrl} error: `, err.message);
             });
         }
     }

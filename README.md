@@ -13,105 +13,15 @@
 Node: `>=8, <9`
 
 ### nvm 
-[install nvm ](https://github.com/creationix/nvm)
+[Install nvm ](https://github.com/creationix/nvm)
 
 :bulb:
- Note: If zsh has been set as default shell on your Mac( echo $0 will see which shell you are using ), you need to install nvm as follow: 
+**Note**: If zsh has been set as default shell on your Mac( `echo $0` will see which shell you are using ), you need to install nvm as follow: 
 ```
 curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.34.0/install.sh | zsh
 ```
-#### bash
 
-##### Automatically call `nvm use`
-
-Put the following at the end of your `$HOME/.bashrc`:
-
-```bash
-find-up () {
-    path=$(pwd)
-    while [[ "$path" != "" && ! -e "$path/$1" ]]; do
-        path=${path%/*}
-    done
-    echo "$path"
-}
-
-cdnvm(){
-    cd "$@";
-    nvm_path=$(find-up .nvmrc | tr -d '[:space:]')
-
-    # If there are no .nvmrc file, use the default nvm version
-    if [[ ! $nvm_path = *[^[:space:]]* ]]; then
-
-        declare default_version;
-        default_version=$(nvm version default);
-
-        # If there is no default version, set it to `node`
-        # This will use the latest version on your machine
-        if [[ $default_version == "N/A" ]]; then
-            nvm alias default node;
-            default_version=$(nvm version default);
-        fi
-
-        # If the current version is not the default version, set it to use the default version
-        if [[ $(nvm current) != "$default_version" ]]; then
-            nvm use default;
-        fi
-
-        elif [[ -s $nvm_path/.nvmrc && -r $nvm_path/.nvmrc ]]; then
-        declare nvm_version
-        nvm_version=$(<"$nvm_path"/.nvmrc)
-
-        declare locally_resolved_nvm_version
-        # `nvm ls` will check all locally-available versions
-        # If there are multiple matching versions, take the latest one
-        # Remove the `->` and `*` characters and spaces
-        # `locally_resolved_nvm_version` will be `N/A` if no local versions are found
-        locally_resolved_nvm_version=$(nvm ls --no-colors $(<"./.nvmrc") | tail -1 | tr -d '\->*' | tr -d '[:space:]')
-
-        # If it is not already installed, install it
-        # `nvm install` will implicitly use the newly-installed version
-        if [[ "$locally_resolved_nvm_version" == "N/A" ]]; then
-            nvm install "$nvm_version";
-        elif [[ $(nvm current) != "$locally_resolved_nvm_version" ]]; then
-            nvm use "$nvm_version";
-        fi
-    fi
-}
-alias cd='cdnvm'
-```
-
-This alias would search 'up' from your current directory in order to detect a `.nvmrc` file. If it finds it, it will switch to that version; if not, it will use the default version.
-
-#### zsh
-
-##### Calling `nvm use` automatically in a directory with a `.nvmrc` file
-
-Put this into your `$HOME/.zshrc` to call `nvm use` automatically whenever you enter a directory that contains an
-`.nvmrc` file with a string telling nvm which node to `use`:
-
-```zsh
-# place this after nvm initialization!
-autoload -U add-zsh-hook
-load-nvmrc() {
-  local node_version="$(nvm version)"
-  local nvmrc_path="$(nvm_find_nvmrc)"
-
-  if [ -n "$nvmrc_path" ]; then
-    local nvmrc_node_version=$(nvm version "$(cat "${nvmrc_path}")")
-
-    if [ "$nvmrc_node_version" = "N/A" ]; then
-      nvm install
-    elif [ "$nvmrc_node_version" != "$node_version" ]; then
-      nvm use
-    fi
-  elif [ "$node_version" != "$(nvm version default)" ]; then
-    echo "Reverting to nvm default version"
-    nvm use default
-  fi
-}
-add-zsh-hook chpwd load-nvmrc
-load-nvmrc
-```
+[Wiki: 如何打开项目时自动切换node版本](https://github.com/TradeshiftCN/v4-debug-helper/wiki/%E5%A6%82%E4%BD%95%E6%89%93%E5%BC%80%E9%A1%B9%E7%9B%AE%E6%97%B6%E8%87%AA%E5%8A%A8%E5%88%87%E6%8D%A2node%E7%89%88%E6%9C%AC)
 
 ## 安装
 
@@ -125,25 +35,35 @@ npm install
 
 ```
 "redirectV4AppIndexUrl": {
-    "http://localhost:8321": [
-        "DEFAULT"
-    ],
-    "http://localhost:8844": [
-        "FapiaoManager",
-        "CNPayTenantAdmin",
-        ......
-    ],
-    "http://localhost:8102": [
-        "BrandhouseLogisticsManager", 
-        "PriceComparison", 
-        ...
+  "http://localhost:8321": {
+    "name": "Apps",
+    "shouldRedirectToLocal": true,
+    "apps": ["DEFAULT"]
+  },
+  "http://localhost:8844": {
+    "name": "cn-pay-apps",
+    "shouldRedirectToLocal": true,
+    "apps": [
+      "FapiaoManager",
+      "CNPayTenantAdmin",
+      ......
     ]
+  },
+  "http://localhost:8102": {
+    "name": "cn-reseller-marketplace-apps",
+    "shouldRedirectToLocal": true,
+    "apps": [
+      "BrandhouseLogisticsManager",
+      "PriceComparison",
+      ......
+    ]
+  }
 }
 ```
 - `redirectV4AppIndexUrl`里面的key是本地V4项目的启动端口
-- 数组里的内容是你想要debug的app的id(只需要列出自己需要debug的appId, 不需要列出所有)
-- 如果在所有的数组中都没找到当前的appid, 那么默认用`DEFULAT`对应的转发地址`http://localhost:8321` 
-
+- `apps`数组里的内容是你想要debug的app的id(只需要列出自己需要debug的appId, 不需要列出所有)
+- `shouldRedirectToLocal` 用来表示是否本地启动该服务，如果为`true` 将会转发到本地项目，`false`则使用线上的地址，不进行本地转发。
+- 如果在所有的`apps`数组中都没找到当前的appid, 那么默认用`DEFULAT`对应的转发到`Apps`，如果本地启动了Apps将会转发到地址`http://localhost:8321`，否则将使用线上的地址，不进行本地转发。 
 
 2. 运行`npm start`，将会启动两个端口
 * 8001: http(s)代理服务器端口
