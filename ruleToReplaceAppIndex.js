@@ -13,9 +13,13 @@ const getAppNameFromUrl = requestUrl => requestUrl.match(/Tradeshift\..+/)[0].re
 const prepareRedirectData = () => {
     const appUrlMap = {};
     Object.keys(config.redirectV4AppIndexUrl)
-      .filter(url => config.redirectV4AppIndexUrl[url].shouldRedirectToLocal)
       .forEach(url => {
-        config.redirectV4AppIndexUrl[url].apps.forEach(appName => appUrlMap[appName] = url);
+        const shouldRedirectToLocal = config.redirectV4AppIndexUrl[url].shouldRedirectToLocal;
+        config.redirectV4AppIndexUrl[url].apps.forEach(appName => {
+          appUrlMap[appName] = {};
+          appUrlMap[appName].url = url;
+          appUrlMap[appName].shouldRedirectToLocal = shouldRedirectToLocal;
+        });
       });
     return appUrlMap;
 };
@@ -54,14 +58,14 @@ module.exports = {
 
         if(hackUrlReg.test(requestDetail.url)) {
             const redirectIndex = getRedirectUrl(requestDetail.url);
-            // DEFAULT 对应的是 APP，如果没有启动 APP 则不需要代理
-            if(!redirectIndex) {
+            // shouldRedirectToLocal 为 false 表示对应的项目没有启动则不需要代理
+            if(!redirectIndex.shouldRedirectToLocal) {
               return;
             }
             const newResponse = responseDetail.response;
             const body = newResponse.body.toString();
             const originalConfigScript = getConfigScript(body);
-            const redirectAppUrl = redirectIndex + requestDetail.requestOptions.path.replace('/v4','');
+            const redirectAppUrl = redirectIndex.url + requestDetail.requestOptions.path.replace('/v4','');
             const logStr = `redirect ${requestDetail.url} to ${redirectAppUrl}`;
 
             console.time(logStr);
@@ -69,7 +73,7 @@ module.exports = {
 
             return rp(redirectAppUrl).then(html => {
                 let newRedirectHtml = html.replace('__config', '__configOriginal');
-                newResponse.body = insertConfig(newRedirectHtml, originalConfigScript, redirectIndex);
+                newResponse.body = insertConfig(newRedirectHtml, originalConfigScript, redirectIndex.url);
                 console.timeEnd(logStr);
                 return {response: newResponse};
             }).catch(err => {
