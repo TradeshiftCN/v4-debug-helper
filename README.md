@@ -60,7 +60,7 @@ npm install
 
 3. 本地启动V4 APP
 
-4. 完成！此事访问线上的V4 APP,将会使用本地的已经启动的V4 APP。
+4. 完成！此时访问线上的V4 APP,将会使用本地的已经启动的V4 APP。
 
 Enjoy!
 
