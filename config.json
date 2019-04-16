@@ -20,13 +20,17 @@
       "FapiaoScanAP",
       "FapiaoLookupConfig",
       "FapiaoIssue",
+      "Proforma",
       "ProformaManagerAP",
-      "ProformaManagerAR"
+      "ProformaManagerAR",
+      "RematchDemo",
+      "PremadeInvoice",
+      "BillingProposal"
     ],
     "http://localhost:8102": [
-      "BrandhouseLogisticsManager", 
-      "PriceComparison", 
-      "ProductEnrichment", 
+      "BrandhouseLogisticsManager",
+      "PriceComparison",
+      "ProductEnrichment",
       "ResellerMarketplaceManager"
     ]
   },
