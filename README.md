@@ -161,7 +161,15 @@ npm install
 
 2. 为浏览器设置代理
 
-    方法很多，自己装吧，推荐用插件，比如[Chrome Proxy SwitchySharp](https://chrome.google.com/webstore/detail/proxy-switchysharp/dpplabbmogkhghncfbfdeeokoefdjegm?hl=zh-CN)
+    2.1 Chrome && firefox
+    
+    a. Install SwitchyOmega plugin [Chrome](https://chrome.google.com/webstore/detail/proxy-switchyomega/padekgcemlokbadohgkifijomclgjgif?hl=zh-CN) or [Firefox](https://addons.mozilla.org/en-US/firefox/addon/switchyomega/)
+    
+    b. Import config: ./switchOmegaOptions_tsMiddleman.bak to SwitchyOmega
+    
+    c. Set SwitchyOmega to rule `auto-ts-middleman`
+    
+    > Note: Firefox should set config `security.mixed_content.block_active_content` to false.
 
 3. 本地启动V4 APP
 

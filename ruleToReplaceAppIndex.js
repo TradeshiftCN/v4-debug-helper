@@ -73,7 +73,8 @@ module.exports = {
                 console.timeEnd(logStr);
                 return {response: newResponse};
             }).catch(err => {
-                console.error(`request ${redirectAppUrl} error: `, err.message)
+                console.error(`request ${redirectAppUrl} error: `, err.message);
+                throw err;
             });
         }
     }
