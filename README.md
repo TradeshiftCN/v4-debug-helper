@@ -22,96 +22,7 @@ curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.34.0/install.sh | z
 ```
 #### bash
 
-##### Automatically call `nvm use`
-
-Put the following at the end of your `$HOME/.bashrc`:
-
-```bash
-find-up () {
-    path=$(pwd)
-    while [[ "$path" != "" && ! -e "$path/$1" ]]; do
-        path=${path%/*}
-    done
-    echo "$path"
-}
-
-cdnvm(){
-    cd "$@";
-    nvm_path=$(find-up .nvmrc | tr -d '[:space:]')
-
-    # If there are no .nvmrc file, use the default nvm version
-    if [[ ! $nvm_path = *[^[:space:]]* ]]; then
-
-        declare default_version;
-        default_version=$(nvm version default);
-
-        # If there is no default version, set it to `node`
-        # This will use the latest version on your machine
-        if [[ $default_version == "N/A" ]]; then
-            nvm alias default node;
-            default_version=$(nvm version default);
-        fi
-
-        # If the current version is not the default version, set it to use the default version
-        if [[ $(nvm current) != "$default_version" ]]; then
-            nvm use default;
-        fi
-
-        elif [[ -s $nvm_path/.nvmrc && -r $nvm_path/.nvmrc ]]; then
-        declare nvm_version
-        nvm_version=$(<"$nvm_path"/.nvmrc)
-
-        declare locally_resolved_nvm_version
-        # `nvm ls` will check all locally-available versions
-        # If there are multiple matching versions, take the latest one
-        # Remove the `->` and `*` characters and spaces
-        # `locally_resolved_nvm_version` will be `N/A` if no local versions are found
-        locally_resolved_nvm_version=$(nvm ls --no-colors $(<"./.nvmrc") | tail -1 | tr -d '\->*' | tr -d '[:space:]')
-
-        # If it is not already installed, install it
-        # `nvm install` will implicitly use the newly-installed version
-        if [[ "$locally_resolved_nvm_version" == "N/A" ]]; then
-            nvm install "$nvm_version";
-        elif [[ $(nvm current) != "$locally_resolved_nvm_version" ]]; then
-            nvm use "$nvm_version";
-        fi
-    fi
-}
-alias cd='cdnvm'
-```
-
-This alias would search 'up' from your current directory in order to detect a `.nvmrc` file. If it finds it, it will switch to that version; if not, it will use the default version.
-
-#### zsh
-
-##### Calling `nvm use` automatically in a directory with a `.nvmrc` file
-
-Put this into your `$HOME/.zshrc` to call `nvm use` automatically whenever you enter a directory that contains an
-`.nvmrc` file with a string telling nvm which node to `use`:
-
-```zsh
-# place this after nvm initialization!
-autoload -U add-zsh-hook
-load-nvmrc() {
-  local node_version="$(nvm version)"
-  local nvmrc_path="$(nvm_find_nvmrc)"
-
-  if [ -n "$nvmrc_path" ]; then
-    local nvmrc_node_version=$(nvm version "$(cat "${nvmrc_path}")")
-
-    if [ "$nvmrc_node_version" = "N/A" ]; then
-      nvm install
-    elif [ "$nvmrc_node_version" != "$node_version" ]; then
-      nvm use
-    fi
-  elif [ "$node_version" != "$(nvm version default)" ]; then
-    echo "Reverting to nvm default version"
-    nvm use default
-  fi
-}
-add-zsh-hook chpwd load-nvmrc
-load-nvmrc
-```
+[Wiki: 如何打开项目时自动切换node版本](https://github.com/TradeshiftCN/v4-debug-helper/wiki/%E5%A6%82%E4%BD%95%E6%89%93%E5%BC%80%E9%A1%B9%E7%9B%AE%E6%97%B6%E8%87%AA%E5%8A%A8%E5%88%87%E6%8D%A2node%E7%89%88%E6%9C%AC)
 
 ## 安装
 
@@ -165,7 +76,7 @@ npm install
     
     a. Install SwitchyOmega plugin [Chrome](https://chrome.google.com/webstore/detail/proxy-switchyomega/padekgcemlokbadohgkifijomclgjgif?hl=zh-CN) or [Firefox](https://addons.mozilla.org/en-US/firefox/addon/switchyomega/)
     
-    b. Import config: ./switchOmegaOptions_tsMiddleman.bak to SwitchyOmega
+    b. Import config: `./assets/switchOmegaOptions_tsMiddleman.bak` to SwitchyOmega
     
     c. Set SwitchyOmega to rule `auto-ts-middleman`
     
