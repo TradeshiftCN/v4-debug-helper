@@ -55,7 +55,6 @@ const insertConfig = (html, configScript, redirectIndex) => {
 module.exports = {
     summary: 'a rule to replace app index',
     *beforeSendResponse(requestDetail, responseDetail) {
-
         if(hackUrlReg.test(requestDetail.url)) {
             const redirectIndex = getRedirectUrl(requestDetail.url)
             const newResponse = responseDetail.response;
@@ -67,7 +66,7 @@ module.exports = {
             console.time(logStr);
             console.info('start ' + logStr);
 
-            return rp(redirectAppUrl).then(html => {
+            return rp({url: redirectAppUrl, headers: requestDetail.requestOptions.headers}).then(html => {
                 let newRedirectHtml = html.replace('__config', '__configOriginal');
                 newResponse.body = insertConfig(newRedirectHtml, originalConfigScript, redirectIndex);
                 console.timeEnd(logStr);
