@@ -6,6 +6,8 @@ const config = require('./config');
 
 app.use(serverRoutes);
 
+require('./service/proxy.service').startProxy();
+
 app.listen(config.UIServerPort, function () {
     console.log(`UI Server listening on port ${config.UIServerPort}`);
 });

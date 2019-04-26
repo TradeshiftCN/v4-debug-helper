@@ -6,6 +6,6 @@ module.exports = {
         /http:\/\/10\.133\.\d+.\d+:8080\/v4\/apps\/Tradeshift\.\w+/
     ],
     appRedirectMapping: {
-        CompanyProfile: 'http://localhost:8321'
+        AppStore: 'http://localhost:8321'
     }
 };

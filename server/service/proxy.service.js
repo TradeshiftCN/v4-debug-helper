@@ -3,12 +3,25 @@ const AnyProxy = require('anyproxy');
 
 let proxyServerInstance = null;
 
+const mockServerRule = require('../rules/builtin/mock-server/index');
+const v4InspectRule = require('../rules/builtin/v4-inspector/index');
+
+const rulesCollector = {
+    summary: 'mock server and v4 inspect',
+    *beforeSendRequest(sourceRequest) {
+        return yield mockServerRule.beforeSendRequest(sourceRequest);
+    }
+    // *beforeSendResponse(sourceRequest, sourceResponse) {
+    //     return yield v4InspectRule.beforeSendResponse(sourceRequest, sourceResponse);
+    // }
+};
+
 /**
- * config url http://anyproxy.io/cn/#%E4%BD%9C%E4%B8%BAnpm%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8
+ * config url http://anyproxy.io/
  */
 const options = {
     port: proxyConfig.proxyPort,
-    rule: require(proxyConfig.currentRule),
+    rule: rulesCollector,
     webInterface: {
         enable: true,
         webPort: proxyConfig.proxyWebPort
@@ -20,8 +33,6 @@ const options = {
 
 
 const startProxy = () => {
-
-    console.log('----proxyServerInstance------', proxyServerInstance);
 
     if(proxyServerInstance && proxyServerInstance.status === 'READY') {
         return;
@@ -41,7 +52,7 @@ const startProxy = () => {
 
 
 const stopProxy = () => {
-    if(proxyServerInstance) {
+    if(proxyServerInstance && proxyServerInstance.status !== 'CLOSED') {
         proxyServerInstance.close();
     }
 };
