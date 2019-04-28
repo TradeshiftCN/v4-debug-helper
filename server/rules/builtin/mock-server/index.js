@@ -5,6 +5,11 @@ const requireFromString = require('require-from-string');
 const getMockRule = (method, url) =>
     config.rules.find(rule => rule.enabled && rule.request.method === method && rule.request.urlPattern.test(url));
 
+const defaultHeader = {
+    'Content-Type': 'application/json',
+    'Access-Control-Allow-Origin': '*'
+};
+
 module.exports = {
     summary: 'mocker server',
     *beforeSendRequest(requestDetail) {
@@ -22,11 +27,12 @@ module.exports = {
                     }
                 }
             }
-            console.debug(`mock ${requestDetail.url} success`);
+            console.debug(`mock ${requestDetail.url} success `);
+
             return {
                 response: {
-                    statusCode: mockRule.response.statusCode,
-                    header: mockRule.response.header,
+                    statusCode: mockRule.response.statusCode || 200,
+                    header: Object.assign({}, defaultHeader, mockRule.response.header),
                     body: realBody
                 }
             }

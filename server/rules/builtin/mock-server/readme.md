@@ -1,5 +1,6 @@
-module.exports = {
-    rules: [
+# mock server
+## config file schema
+```
         {
             name: 'a custom name',
             request: {
@@ -25,36 +26,5 @@ module.exports = {
                 //     module.exports = test;
                 // `
             }
-        },
-        {
-            name: 'user',
-            request: {
-                method: 'GET',
-                urlPattern: /https:\/\/api-sandbox.tradeshiftchina.cn\/tradeshift\/rest\/external\/account\/info\/user/
-            },
-            enabled: true,
-            response: {
-                body: `{"id": "sfsfsf"}`
-            }
-        },
-        {
-            name: 'store',
-            request: {
-                method: 'GET',
-                urlPattern: /https:\/\/api-sandbox.tradeshiftchina.cn\/tradeshift\/rest\/external\/apps\/store\/categories/
-            },
-            enabled: true,
-            response: {
-                statusCode: 200,
-                header: {
-                    'Content-Type': 'application/json',
-                    'Access-Control-Allow-Origin': 'https://sandbox.tradeshiftchina.cn'
-                },
-                body: `
-                    function test(request) {return {id: request.url}};
-                    module.exports = test;
-                `
-            }
         }
-    ]
-};
+```
