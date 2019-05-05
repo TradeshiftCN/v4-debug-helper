@@ -27,6 +27,11 @@
       "PremadeInvoice",
       "BillingProposal"
     ],
+    "http://localhost:8855": [
+      "FundingMarketEndUser",
+      "FundingMarketSupport",
+      "FundingMarketReseller"
+    ],
     "http://localhost:8102": [
       "BrandhouseLogisticsManager",
       "PriceComparison",
