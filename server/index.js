@@ -1,14 +1,31 @@
-
+const getPort = require('get-port');
 const express = require('express');
 const app = express();
 const serverRoutes = require('./api/index');
-const config = require('./config');
+const CacheService = require('./service/cache.service');
 
-app.use(serverRoutes);
+const initConfig = async () => {
+    CacheService.setUIServerPort(await getPort());
+    CacheService.setProxyUIPort(await getPort());
+};
 
-require('./service/proxy.service').startProxy();
+(async () => {
 
-app.listen(config.UIServerPort, function () {
-    console.log(`UI Server listening on port ${config.UIServerPort}`);
-});
+    await initConfig();
+
+    app.use(serverRoutes);
+
+    app.listen(CacheService.getUIServerPort(), function () {
+        console.log(`UI Server listening on port ${CacheService.getUIServerPort()}`);
+    });
+
+    require('./service/proxy.service').startProxy();
+
+})();
+
+
+
+
+
+
 

@@ -12,6 +12,7 @@
     "anyproxy": "^4.1.0",
     "cheerio": "^1.0.0-rc.2",
     "express": "^4.16.4",
+    "get-port": "^5.0.0",
     "request-promise": "^4.2.2",
     "require-from-string": "^2.0.2"
   }
