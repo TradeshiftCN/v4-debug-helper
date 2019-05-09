@@ -1,6 +1,7 @@
-const config = require('./config.js');
 const rp = require('request-promise');
 const cheerio = require('cheerio');
+
+const ConfigService = require('../../../service/config.service');
 
 const getConfigScript = html => html.match(/<script type="text\/javascript">\s+var __config = \{.+\};\s+<\/script>/)[0];
 
@@ -8,7 +9,7 @@ const getAppIdFromUrl = requestUrl => requestUrl.match(/Tradeshift\..+/)[0].repl
 
 const getRedirectUrl = sourceUrl => {
     const appId = getAppIdFromUrl(sourceUrl);
-    const redirectConfig = config.appRedirectMapping.find(redirectConfig => redirectConfig.enabled && redirectConfig.appId === appId);
+    const redirectConfig = ConfigService.getRuleV4InspectorConfig().appRedirectMapping.find(redirectConfig => redirectConfig.enabled && redirectConfig.appId === appId);
     return redirectConfig && redirectConfig.redirectUrl;
 };
 
@@ -36,7 +37,7 @@ const insertConfig = (html, configScript, redirectIndex) => {
     return $.html();
 };
 
-const shouldInspect = url => config.inspectUrls.some(urlConfig => urlConfig.enabled && urlConfig.pattern.test(url));
+const shouldInspect = url => ConfigService.getRuleV4InspectorConfig().inspectUrls.some(urlConfig => urlConfig.enabled && urlConfig.pattern.test(url));
 
 module.exports = {
     summary: 'v4 app inspector',

@@ -5,6 +5,7 @@ const mockServerRule = require('../rules/builtin/mock-server/index');
 const v4InspectRule = require('../rules/builtin/v4-inspector/index');
 
 const CacheService = require('./cache.service');
+const ConfigService = require('./config.service');
 
 const rulesCollector = {
     summary: 'mock server and v4 inspect',
@@ -43,7 +44,7 @@ class ProxyService {
             return;
         }
 
-        options.port = 8001;
+        options.port = ConfigService.getSystemConfig().proxyPort;
         options.webInterface.webPort = CacheService.getProxyUIPort();
 
         this.proxyServerInstance = new AnyProxy.ProxyServer(options);

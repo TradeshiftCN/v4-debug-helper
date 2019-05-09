@@ -3,10 +3,12 @@ const express = require('express');
 const app = express();
 const serverRoutes = require('./api/index');
 const CacheService = require('./service/cache.service');
+const ConfigService = require('./service/config.service');
 
 const initConfig = async () => {
     CacheService.setUIServerPort(await getPort());
     CacheService.setProxyUIPort(await getPort());
+    ConfigService.init();
 };
 
 (async () => {
