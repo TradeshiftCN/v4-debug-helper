@@ -4,9 +4,13 @@ const cheerio = require('cheerio');
 
 const getConfigScript = html => html.match(/<script type="text\/javascript">\s+var __config = \{.+\};\s+<\/script>/)[0];
 
-const getAppNameFromUrl = requestUrl => requestUrl.match(/Tradeshift\..+/)[0].replace('Tradeshift.', '');
+const getAppIdFromUrl = requestUrl => requestUrl.match(/Tradeshift\..+/)[0].replace('Tradeshift.', '');
 
-const getRedirectUrl = sourceUrl => config.appRedirectMapping[getAppNameFromUrl(sourceUrl)];
+const getRedirectUrl = sourceUrl => {
+    const appId = getAppIdFromUrl(sourceUrl);
+    const redirectConfig = config.appRedirectMapping.find(redirectConfig => redirectConfig.enabled && redirectConfig.appId === appId);
+    return redirectConfig && redirectConfig.redirectUrl;
+};
 
 const insertConfig = (html, configScript, redirectIndex) => {
     const $ = cheerio.load(html, {xmlMode: true});
@@ -32,7 +36,7 @@ const insertConfig = (html, configScript, redirectIndex) => {
     return $.html();
 };
 
-const shouldInspect = url => config.inspectUrlsPattern.some(urlPattern => urlPattern.test(url));
+const shouldInspect = url => config.inspectUrls.some(urlConfig => urlConfig.enabled && urlConfig.pattern.test(url));
 
 module.exports = {
     summary: 'v4 app inspector',

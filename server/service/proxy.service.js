@@ -10,10 +10,10 @@ const rulesCollector = {
     summary: 'mock server and v4 inspect',
     *beforeSendRequest(sourceRequest) {
         return yield mockServerRule.beforeSendRequest(sourceRequest);
+    },
+    *beforeSendResponse(sourceRequest, sourceResponse) {
+        return yield v4InspectRule.beforeSendResponse(sourceRequest, sourceResponse);
     }
-    // *beforeSendResponse(sourceRequest, sourceResponse) {
-    //     return yield v4InspectRule.beforeSendResponse(sourceRequest, sourceResponse);
-    // }
 };
 
 /**
