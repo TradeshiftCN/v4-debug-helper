@@ -1,4 +1,3 @@
-const proxyConfig = require('../config');
 const AnyProxy = require('anyproxy');
 
 const mockServerRule = require('../rules/builtin/mock-server/index');
@@ -35,7 +34,7 @@ let options = {
     },
     dangerouslyIgnoreUnauthorized: true,
     forceProxyHttps: true,
-    silent: !proxyConfig.logAllRequest
+    silent: true
 };
 
 class ProxyService {
@@ -70,6 +69,22 @@ class ProxyService {
             this.proxyServerInstance.close();
         }
     };
+
+    status() {
+        if(this.proxyServerInstance){
+            return {
+                proxyHostName: this.proxyServerInstance.proxyHostName,
+                proxyPort: this.proxyServerInstance.proxyPort,
+                proxyType: this.proxyServerInstance.proxyType,
+                proxyWebinterfaceConfig: this.proxyServerInstance.proxyWebinterfaceConfig,
+                status: this.proxyServerInstance.status
+            };
+        } else {
+            return {
+                status: 'SYS_ERROR_NOT_INIT'
+            }
+        }
+    }
 
 }
 

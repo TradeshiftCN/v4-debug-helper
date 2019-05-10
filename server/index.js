@@ -1,7 +1,8 @@
 const getPort = require('get-port');
 const express = require('express');
 const app = express();
-const serverRoutes = require('./api/index');
+const bodyParser = require('body-parser');
+const serverRoutes = require('./routes/index');
 const CacheService = require('./service/cache.service');
 const ConfigService = require('./service/config.service');
 
@@ -15,7 +16,12 @@ const initConfig = async () => {
 
     await initConfig();
 
-    app.use(serverRoutes);
+    // todo move prefix out of here
+    app.use(bodyParser.json());
+    app.use('/proxy', serverRoutes.proxy);
+    app.use('/system', serverRoutes.system);
+    app.use('/rules/mock-server', serverRoutes.mockServer);
+    app.use('/rules/v4-inspector', serverRoutes.v4Inspector);
 
     app.listen(CacheService.getUIServerPort(), function () {
         console.log(`UI Server listening on port ${CacheService.getUIServerPort()}`);

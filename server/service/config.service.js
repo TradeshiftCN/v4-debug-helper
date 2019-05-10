@@ -9,7 +9,7 @@ const requireForce = (module) => {
 class ConfigService {
 
     /**
-     * generate local config files if = not exits
+     * generate local config files if not exits
      */
     init(){
         const ruleLocalConfigDir = path.resolve(__dirname, '../../client-configs/local/');
@@ -30,6 +30,11 @@ class ConfigService {
 
     getRuleMockServerConfig() {
         return requireForce('../../client-configs/local/rule-mock-server.config');
+    }
+
+    saveConfig(configName, value){
+        const content = 'module.exports = ' + JSON.stringify(value, null, 4)
+        fs.writeFileSync(path.resolve(__dirname, `../../client-configs/local/${configName}.js`), content);
     }
 }
 

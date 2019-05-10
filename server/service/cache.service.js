@@ -22,7 +22,9 @@ class CacheService {
     }
 
     getUIServerPort() {
-        return this.getValue(UI_SERVER_PORT);
+        // todo remove hard code
+        // return this.getValue(UI_SERVER_PORT);
+        return 8003;
     }
 
     setProxyUIPort(port) {
@@ -30,7 +32,9 @@ class CacheService {
     }
 
     getProxyUIPort() {
-        return this.getValue(PROXY_UI_PORT);
+        // todo remove hard code
+        // return this.getValue(PROXY_UI_PORT);
+        return 8002;
     }
 }
 
