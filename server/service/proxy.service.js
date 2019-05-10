@@ -7,13 +7,19 @@ const v4InspectRule = require('../rules/builtin/v4-inspector/index');
 const CacheService = require('./cache.service');
 const ConfigService = require('./config.service');
 
+const isRuleEnabled = ruleName => ConfigService.getSystemConfig().rules.builtin[ruleName].enabled;
+
 const rulesCollector = {
     summary: 'mock server and v4 inspect',
     *beforeSendRequest(sourceRequest) {
-        return yield mockServerRule.beforeSendRequest(sourceRequest);
+        if(isRuleEnabled('mock-server')){
+            return yield mockServerRule.beforeSendRequest(sourceRequest);
+        }
     },
     *beforeSendResponse(sourceRequest, sourceResponse) {
-        return yield v4InspectRule.beforeSendResponse(sourceRequest, sourceResponse);
+        if(isRuleEnabled('v4-inspector')){
+            return yield v4InspectRule.beforeSendResponse(sourceRequest, sourceResponse);
+        }
     }
 };
 
