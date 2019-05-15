@@ -1,5 +1,6 @@
 const path = require('path');
 const fs = require('fs');
+const fse = require('fs-extra')
 
 const requireForce = (module) => {
     delete require.cache[require.resolve(module)];
@@ -35,6 +36,11 @@ class ConfigService {
     saveConfig(configName, value){
         const content = 'module.exports = ' + JSON.stringify(value, null, 4)
         fs.writeFileSync(path.resolve(__dirname, `../../client-configs/local/${configName}.js`), content);
+    }
+
+    restoreToInit() {
+        fse.removeSync(path.resolve(__dirname, '../../client-configs/local'));
+        this.init();
     }
 }
 

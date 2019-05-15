@@ -27,7 +27,8 @@ const initConfig = async () => {
         console.log(`UI Server listening on port ${CacheService.getUIServerPort()}`);
     });
 
-    require('./service/proxy.service').startProxy();
+    // todo remove //
+    // require('./service/proxy.service').startProxy();
 
 })();
 

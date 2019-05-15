@@ -15,4 +15,11 @@ router.put('/config', (req, res) => {
     }));
 });
 
+router.put('/reset_all_configs', (req, res) => {
+    ConfigService.restoreToInit();
+    res.send(new Response({
+        data: 'success'
+    }));
+});
+
 module.exports = router;

@@ -1,0 +1,18 @@
+{
+  "id": "v4-inspector-hack-url",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "pattern": {
+      "type": "string",
+      "required": true
+    },
+    "enabled": {
+      "type": "boolean",
+      "required": true
+    }
+  }
+}

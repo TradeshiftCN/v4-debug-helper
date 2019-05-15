@@ -1,0 +1,18 @@
+{
+  "id": "v4-inspector-app-mapping",
+  "type": "object",
+  "properties": {
+    "appId": {
+      "type": "string",
+      "required": true
+    },
+    "redirectUrl": {
+      "type": "string",
+      "required": true
+    },
+    "enabled": {
+      "type": "boolean",
+      "required": true
+    }
+  }
+}
