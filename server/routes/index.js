@@ -1,4 +1,4 @@
-module.exports =  {
+module.exports = {
     system: require('./system.route'),
     mockServer: require('./mock-server.route'),
     proxy: require('./proxy.route'),

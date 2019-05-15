@@ -17,12 +17,12 @@ router.get('/config', (req, res) => {
  */
 router.post('/hack-url', schemaValidator(hackUrlSchema), (req, res) => {
 
-    let config =ConfigService.getRuleV4InspectorConfig();
+    let config = ConfigService.getRuleV4InspectorConfig();
 
-    if(config.inspectUrls.find(inspectUrl => inspectUrl.name === req.body.name)){
+    if (config.inspectUrls.find(inspectUrl => inspectUrl.name === req.body.name)) {
         res.status(403).send(new Response({
             error: `hack-url ${req.body.name} already exits`
-        }))
+        }));
     } else {
         config.inspectUrls.push(req.body);
         updateConfig(config);
@@ -36,9 +36,9 @@ router.post('/hack-url', schemaValidator(hackUrlSchema), (req, res) => {
  * update hack url
  */
 router.put('/hack-url/:name', schemaValidator(hackUrlSchema), (req, res) => {
-    let config =ConfigService.getRuleV4InspectorConfig();
+    let config = ConfigService.getRuleV4InspectorConfig();
     let matched = config.inspectUrls.find(inspectUrl => inspectUrl.name === req.params.name);
-    if(matched) {
+    if (matched) {
         matched.pattern = req.body.pattern;
         matched.enabled = req.body.enabled;
         updateConfig(config);
@@ -56,7 +56,7 @@ router.put('/hack-url/:name', schemaValidator(hackUrlSchema), (req, res) => {
  * delete hack url
  */
 router.delete('/hack-url/:name', (req, res) => {
-    let config =ConfigService.getRuleV4InspectorConfig();
+    let config = ConfigService.getRuleV4InspectorConfig();
     config.inspectUrls = config.inspectUrls.filter(inspectUrl => inspectUrl.name !== req.params.name);
     updateConfig(config);
     res.send(new Response({
@@ -68,9 +68,9 @@ router.delete('/hack-url/:name', (req, res) => {
  * new app-mapping
  */
 router.post('/app-mapping', schemaValidator(appMappingSchema), (req, res) => {
-    let config =ConfigService.getRuleV4InspectorConfig();
+    let config = ConfigService.getRuleV4InspectorConfig();
 
-    if(config.appRedirectMapping.find(appRedirect => appRedirect.appId === req.body.appId)){
+    if (config.appRedirectMapping.find(appRedirect => appRedirect.appId === req.body.appId)) {
         res.status(403).send(new Response({
             error: `app-mapping ${req.body.appId} already exits`
         }))
@@ -87,9 +87,9 @@ router.post('/app-mapping', schemaValidator(appMappingSchema), (req, res) => {
  * update app-mapping
  */
 router.put('/app-mapping/:appId', schemaValidator(appMappingSchema), (req, res) => {
-    let config =ConfigService.getRuleV4InspectorConfig();
+    let config = ConfigService.getRuleV4InspectorConfig();
     let matched = config.appRedirectMapping.find(appRedirect => appRedirect.appId === req.params.appId);
-    if(matched) {
+    if (matched) {
         matched.redirectUrl = req.body.redirectUrl;
         matched.enabled = req.body.enabled;
         updateConfig(config);
@@ -107,7 +107,7 @@ router.put('/app-mapping/:appId', schemaValidator(appMappingSchema), (req, res) 
  * delete app-mapping
  */
 router.delete('/app-mapping/:appId', (req, res) => {
-    let config =ConfigService.getRuleV4InspectorConfig();
+    let config = ConfigService.getRuleV4InspectorConfig();
     config.appRedirectMapping = config.appRedirectMapping.filter(appRedirect => appRedirect.appId !== req.params.appId);
     updateConfig(config);
     res.send(new Response({

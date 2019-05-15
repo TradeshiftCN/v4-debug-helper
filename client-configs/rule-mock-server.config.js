@@ -5,7 +5,7 @@ module.exports = {
             request: {
                 method: 'GET',
                 // regular expression of mock url. (note called with test directly)
-                urlPattern: /https:\/\/api-sandbox.tradeshiftchina.cn\/tradeshift\/rest\/external\/account\/info\/user/
+                urlPattern: 'https:\/\/api-sandbox.tradeshiftchina.cn\/tradeshift\/rest\/external\/account\/info\/user/'
             },
             enabled: true,
             response: {
@@ -30,7 +30,7 @@ module.exports = {
             name: 'user',
             request: {
                 method: 'GET',
-                urlPattern: /https:\/\/api-sandbox.tradeshiftchina.cn\/tradeshift\/rest\/external\/account\/info\/user/
+                urlPattern: 'https:\/\/api-sandbox.tradeshiftchina.cn\/tradeshift\/rest\/external\/account\/info\/user'
             },
             enabled: true,
             response: {
@@ -41,7 +41,7 @@ module.exports = {
             name: 'store',
             request: {
                 method: 'GET',
-                urlPattern: /https:\/\/api-sandbox.tradeshiftchina.cn\/tradeshift\/rest\/external\/apps\/store\/categories/
+                urlPattern: 'https:\/\/api-sandbox.tradeshiftchina.cn\/tradeshift\/rest\/external\/apps\/store\/categories'
             },
             enabled: true,
             response: {

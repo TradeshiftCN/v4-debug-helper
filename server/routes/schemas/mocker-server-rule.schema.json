@@ -1,0 +1,40 @@
+{
+  "id": "mocker-server-rule",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "request": {
+      "type": "object",
+      "properties": {
+        "method": {
+          "enum": ["GET", "POST", "DELETE", "PUT", "OPTIONS", "CONNECT"]
+        },
+        "urlPattern": {
+          "type": "string",
+          "required": true
+        }
+      }
+    },
+    "enabled": {
+      "type": "boolean",
+      "required": true
+    },
+    "response": {
+      "type": "object",
+      "properties": {
+        "statusCode": {
+          "type": "number"
+        },
+        "header": {
+          "type": "object"
+        },
+        "body": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}
