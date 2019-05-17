@@ -1,0 +1,63 @@
+@import '../../common/style.less';
+
+.top-bar{
+  background-color: @tm-color-blue-bg;
+  position: fixed;
+  width: 100%;
+  z-index: 1;
+
+  .logo {
+    width: 20 * @tm-unit;
+    margin-right: @tm-unit;
+    float: left;
+    .logo-img{
+      width: 6 * @tm-unit;
+      height: 6 * @tm-unit;;
+    }
+    .logo-text{
+      font-weight: bold;
+      color: white;
+    }
+  }
+
+
+  .ant-menu-horizontal > .ant-menu-item{
+    border-bottom: 0;
+    top: 0;
+  }
+
+  .menu{
+    line-height: 8 * @tm-unit;
+    background-color: @tm-color-blue-bg;
+    border-bottom: 0;
+
+    .ant-menu-item{
+      width: 8 * @tm-unit;
+    }
+
+    .menu-item-icon{
+      margin-right: 0;
+      font-size: 2.5 * @tm-unit;
+      color: white;
+    }
+
+    .ant-menu-item-selected{
+      background-color: white;
+      border-bottom: 0;
+      .menu-item-icon{
+        color: @tm-color-blue;
+      }
+    }
+
+    .operations-block{
+      float: right;
+      .operations-icon{
+        width: 8 * @tm-unit;
+        font-size: 2.5 * @tm-unit;
+        color: white;
+        cursor: pointer;
+      }
+    }
+  }
+
+}
