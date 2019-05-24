@@ -17,7 +17,7 @@ const Home = () => {
             </div>
             <Divider />
             <div className="rule-list-container">
-                <Title level={4}>Rule List</Title>
+                <Text strong={true}>Rule List</Text>
                 <RuleList />
             </div>
         </div>

@@ -1,27 +1,41 @@
 import React from 'react';
-import { List, Avatar, Button, Skeleton } from 'antd';
+import {List, Switch, Icon} from 'antd';
 
-const ruleList: any = [
-    {
-        name: 'Tradeshift V4 App Debug Helper',
-        desc: "this is decs this is decs this is decs ",
-        enabled: true
-    },
-    {
-        name: 'Mock Server',
-        desc: "this is decs this is decs this is decs ",
-        enabled: true
+import { connect } from 'react-redux'
+
+import './index.less';
+
+const mapState = (state:any) => ({
+    ruleList: () => {
+        return [
+            {
+                name: 'Tradeshift V4 App Debug Helper',
+                desc: "this is decs this is decs this is decs ",
+                enabled: state.system.v4InspectorEnabled
+            },
+            {
+                name: 'Mock Server',
+                desc: "this is decs this is decs this is decs ",
+                enabled: state.system.mockServerEnabled
+            }
+        ];
     }
-];
+});
 
-const RuleLists = () => {
+const mapDispatch = (dispatch: any) => ({
+    getSystemConfigAsync: dispatch.system.getSystemConfigAsync
+});
+
+
+
+const RuleLists = (props: any) => {
     return (
         <List
-            className="demo-loadmore-list"
+            className="rule-list"
             itemLayout="horizontal"
-            dataSource={ruleList}
+            dataSource={props.ruleList()}
             renderItem={(item:any) => (
-                <List.Item actions={[<a>edit</a>, <a>more</a>]}>
+                <List.Item actions={[<Icon className="edit-icon" type="edit" />, <Switch checked={item.enabled} />]}>
                     <List.Item.Meta
                         title={item.name}
                         description={item.desc}
@@ -32,5 +46,5 @@ const RuleLists = () => {
     )
 };
 
-export default RuleLists;
+export default connect(mapState, mapDispatch)(RuleLists);
 
