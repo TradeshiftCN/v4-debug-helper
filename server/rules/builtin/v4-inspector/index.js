@@ -37,7 +37,7 @@ const insertConfig = (html, configScript, redirectIndex) => {
     return $.html();
 };
 
-const shouldInspect = url => ConfigService.getRuleV4InspectorConfig().inspectUrls.some(urlConfig => urlConfig.enabled && urlConfig.pattern.test(url));
+const shouldInspect = url => ConfigService.getRuleV4InspectorConfig().inspectUrls.some(urlConfig => urlConfig.enabled && new RegExp(urlConfig.pattern).test(url));
 
 module.exports = {
     summary: 'v4 app inspector',

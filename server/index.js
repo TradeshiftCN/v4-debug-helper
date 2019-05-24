@@ -16,6 +16,12 @@ const initConfig = async () => {
 
     await initConfig();
 
+
+    app.all('*', (req, res, next) => {
+        res.setHeader("Access-Control-Allow-Origin", "*");
+        next();
+    });
+
     // todo move prefix out of here
     app.use(bodyParser.json());
     app.use('/proxy', serverRoutes.proxy);

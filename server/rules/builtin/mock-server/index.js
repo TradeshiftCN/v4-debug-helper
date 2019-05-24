@@ -4,7 +4,7 @@ const requireFromString = require('require-from-string');
 const ConfigService = require('../../../service/config.service');
 
 const getMockRule = (method, url) =>
-    ConfigService.getRuleMockServerConfig().rules.find(rule => rule.enabled && rule.request.method === method && rule.request.urlPattern.test(url));
+    ConfigService.getRuleMockServerConfig().rules.find(rule => rule.enabled && rule.request.method === method && new RegExp(rule.request.urlPattern).test(url));
 
 const defaultHeader = {
     'Content-Type': 'application/json',
