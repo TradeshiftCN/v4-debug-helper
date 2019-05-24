@@ -33,6 +33,8 @@ const insertConfig = (html, configScript, redirectIndex) => {
             $(element).html(' ');
         }
 
+        $('body').append(`<div style="color: lightgrey;font-size: 60px;z-index: 99999999;position: fixed;top:10%;">Proxied By V4-debug-helper</div>`);
+
     });
     return $.html();
 };
