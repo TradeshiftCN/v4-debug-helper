@@ -39,5 +39,5 @@
       "ResellerMarketplaceManager"
     ]
   },
-  "logRequestToConsole": false
+  "logRequestToConsole": true
 }
