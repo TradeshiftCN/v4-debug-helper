@@ -19,7 +19,8 @@ const mapState = (state:any) => ({
 
 
 const mapDispatch = (dispatch: any) => ({
-    getSystemConfigAsync: dispatch.system.getSystemConfigAsync
+    getSystemConfigAsync: dispatch.system.getSystemConfigAsync,
+    startProxyAsync: dispatch.proxy.startProxyAsync
 });
 
 class App extends React.PureComponent{
@@ -30,6 +31,7 @@ class App extends React.PureComponent{
         super(props);
         this.props = props;
         props.getSystemConfigAsync();
+        props.startProxyAsync();
     }
 
     render() {

@@ -1,0 +1,38 @@
+{
+  "id": "system-config",
+  "type": "object",
+  "properties": {
+    "proxyPort": {
+      "type": "number",
+      "required": true
+    },
+    "rules": {
+      "type": "object",
+      "properties": {
+        "builtin": {
+          "type": "object",
+          "properties": {
+            "mock-server": {
+              "type": "object",
+              "properties": {
+                "enabled": {
+                  "type": "boolean",
+                  "required": true
+                }
+              }
+            },
+            "v4-inspector": {
+              "type": "object",
+              "properties": {
+                "enabled": {
+                  "type": "boolean",
+                  "required": true
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
