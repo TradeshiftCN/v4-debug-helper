@@ -1,7 +1,7 @@
 import React from 'react';
 import {List, Switch, Icon} from 'antd';
-
 import { connect } from 'react-redux'
+import {Link} from 'react-router-dom';
 
 import './index.less';
 
@@ -49,7 +49,7 @@ const RuleLists = (props: any) => {
             dataSource={props.ruleList()}
             renderItem={(item:any) => (
                 <List.Item actions={[
-                    <Icon className="edit-icon" type="edit" />,
+                    <Link to={'/rules/'+item.id}><Icon className="edit-icon" type="edit" /></Link>,
                     <Switch checked={item.enabled} onClick={(checked:boolean) => toggleRule(props, item.id, checked)} />
                 ]}>
                     <List.Item.Meta

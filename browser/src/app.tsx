@@ -7,6 +7,7 @@ import TopBar from './components/topBar';
 import Home from './components/home';
 import Config from './components/config';
 import Help from './components/help';
+import V4Inspector from './components/rules/v4-inspector';
 
 import './app.less';
 
@@ -45,6 +46,7 @@ class App extends React.PureComponent{
                                 <Route path="/" exact component={Home} />
                                 <Route path="/config/" component={Config} />
                                 <Route path="/help/" component={Help} />
+                                <Route path="/rules/v4-inspector/" component={V4Inspector} />
                             </Content>
                         </Layout>
                     </Router>
