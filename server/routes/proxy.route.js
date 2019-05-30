@@ -4,34 +4,24 @@ const proxyService = require('../service/proxy.service');
 const Response = require('../service/response.dto');
 
 router.put('/start', (req, res) => {
-    proxyService.startProxy();
 
-    return waitUntil(() => {
-        return proxyService.status().status === 'READY';
-    }, 5000, 100).then(() => {
-        res.send(new Response({
-            data: 'started'
-        }));
-    }).catch(e => {
-        res.status(500).send(new Response({
-            error: 'sorry, failed  to start proxy, please try to restart application.'
-        }));
-    });
+    return proxyService.startProxy()
+        .then(() => res.send(new Response({ data: 'started' })))
+        .catch(e => {
+            res.status(500).send(new Response({
+                error: e && e.message
+            }));
+        })
 });
 
 router.put('/stop', (req, res) => {
-    proxyService.stopProxy();
-    return waitUntil(() => {
-        return proxyService.status().status === 'CLOSED';
-    }, 5000, 100).then(() => {
-        res.send(new Response({
-            data: 'stopped'
-        }));
-    }).catch(e => {
-        res.status(500).send(new Response({
-            error: 'sorry, failed  to stop proxy, please try to restart application.'
-        }));
-    });
+    return proxyService.stopProxy()
+        .then(() => res.send(new Response({data: 'stopped'})))
+        .catch(e => {
+            res.status(500).send(new Response({
+                error: e && e.message
+            }));
+        });
 });
 
 router.get('/status', (req, res) => {

@@ -56,6 +56,14 @@ export const system = {
                 mockServerEnabled: enabled
             }));
         },
+        async updateProxyPortAsync(port: number, rootState: any) {
+            const oldState = rootState.system;
+            return await dispatch.system.updateSystemConfigAsync(new SystemConfig({
+                proxyPort: port,
+                v4InspectorEnabled: oldState.v4InspectorEnabled,
+                mockServerEnabled: oldState.mockServerEnabled
+            }));
+        },
         async updateSystemConfigAsync(systemConfig: SystemConfig) {
             const body = {
                 proxyPort: systemConfig.proxyPort,

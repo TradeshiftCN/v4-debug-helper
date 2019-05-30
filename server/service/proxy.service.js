@@ -1,4 +1,6 @@
 const AnyProxy = require('anyproxy');
+const getPort = require('get-port');
+const waitUntil = require('async-wait-until');
 
 const mockServerRule = require('../rules/builtin/mock-server/index');
 const v4InspectRule = require('../rules/builtin/v4-inspector/index');
@@ -43,14 +45,22 @@ class ProxyService {
         this.proxyServerInstance = null;
     }
 
-    startProxy() {
+    async startProxy() {
 
         if(this.proxyServerInstance && this.proxyServerInstance.status === 'READY') {
-            return;
+            return Promise.resolve();
         }
 
         options.port = ConfigService.getSystemConfig().proxyPort;
         options.webInterface.webPort = CacheService.getProxyUIPort();
+
+        if(await this.isPortInUse(options.port)){
+            throw new Error(`port ${options.port} already in use, please change to other port`);
+        }
+
+        if(options.port === options.webInterface.webPort){
+            throw new Error('proxy port and web interface web port can not be same.');
+        }
 
         this.proxyServerInstance = new AnyProxy.ProxyServer(options);
 
@@ -62,12 +72,24 @@ class ProxyService {
         });
         this.proxyServerInstance.start();
 
+        return  waitUntil(() => this.status().status === 'READY', 5000, 100)
+            .catch(e => {
+                console.error('proxy start error', e);
+                throw new Error('failed to start proxy, please try to restart application.');
+            })
     };
 
-    stopProxy () {
+    async stopProxy () {
         if(this.proxyServerInstance && this.proxyServerInstance.status !== 'CLOSED') {
             this.proxyServerInstance.close();
+            return waitUntil(() => {
+                return this.status().status === 'CLOSED';
+            }, 5000, 100).catch(e => {
+                console.error('proxy stop error', e);
+                throw new Error('failed to stop proxy, please try to restart application.');
+            });
         }
+        return Promise.resolve();
     };
 
     status() {
@@ -84,6 +106,10 @@ class ProxyService {
                 status: 'SYS_ERROR_NOT_INIT'
             }
         }
+    }
+
+    async isPortInUse(port) {
+        return port !== await getPort({port});
     }
 
 }
