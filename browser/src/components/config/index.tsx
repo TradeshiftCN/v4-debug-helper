@@ -22,7 +22,7 @@ class Config extends React.PureComponent<Props>{
 
     state: State = initialState;
 
-    constructor(props:any){
+    constructor(props:Props){
         super(props);
         this.onProxyPortChange.bind(this);
         this.updateProxyPort.bind(this);

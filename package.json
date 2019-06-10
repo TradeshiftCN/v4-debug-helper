@@ -18,6 +18,7 @@
     "get-port": "^5.0.0",
     "jsonschema": "^1.2.4",
     "lodash": "^4.17.11",
+    "prop-types": "^15.7.2",
     "request-promise": "^4.2.2",
     "require-from-string": "^2.0.2"
   },

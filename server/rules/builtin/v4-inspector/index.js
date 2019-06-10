@@ -32,10 +32,8 @@ const insertConfig = (html, configScript, redirectIndex) => {
         if (!$(element).html()) {
             $(element).html(' ');
         }
-
-        $('body').append(`<div style="color: lightgrey;font-size: 60px;z-index: 99999999;position: fixed;top:10%;">Proxied By V4-debug-helper</div>`);
-
     });
+    $('body').append(`<div id="v4InspectorFlag" ondblclick="document.querySelector('#v4InspectorFlag').remove()" style="color: lightgrey;font-size: 60px;z-index: 99999999;position: fixed;top:10%;">Proxied By V4-debug-helper</div>`);
     return $.html();
 };
 
@@ -59,7 +57,7 @@ module.exports = {
             console.time(logStr);
             console.info('start ' + logStr);
 
-            return rp(redirectAppUrl).then(html => {
+            return rp({url: redirectAppUrl, headers: requestDetail.requestOptions.headers}).then(html => {
                 let newRedirectHtml = html.replace('__config', '__configOriginal');
                 newResponse.body = insertConfig(newRedirectHtml, originalConfigScript, redirectIndex);
                 console.timeEnd(logStr);
