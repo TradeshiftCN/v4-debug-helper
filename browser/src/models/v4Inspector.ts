@@ -26,13 +26,7 @@ export const v4Inspector = {
     reducers: {
         updateV4InspectorConfig(state: any, inspectUrls: InspectUrlModel[], appRedirectMapping: AppRedirectMappingModel[]){
           return  state.merge({inspectUrls, appRedirectMapping});
-        },
-        // updateInspectUrls(state: any, inspectUrls: InspectUrlModel[]) {
-        //     return state.merge({inspectUrls});
-        // },
-        // updateAppRedirectMapping(state: any, appRedirectMapping: AppRedirectMappingModel[]) {
-        //     return state.merge({appRedirectMapping});
-        // }
+        }
     },
     effects: (dispatch: any) => ({
         async getV4InspectorConfigAsync() {
