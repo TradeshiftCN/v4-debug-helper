@@ -1,5 +1,5 @@
 import React from 'react'
-import { Collapse } from 'antd';
+import { Collapse, Breadcrumb } from 'antd';
 import { connect } from 'react-redux'
 
 import InspectUrls from './inspector-urls';
@@ -24,15 +24,22 @@ class v4Inspector extends React.PureComponent<Props>{
 
     render(){
         return (
-            <Collapse bordered={false} defaultActiveKey={['1','2']}>
-                <Panel header="Hack Urls" key="1">
-                    <InspectUrls />
-                </Panel>
-                <Panel header="App Mappings" key="2">
-                    2
-                </Panel>
+            <div>
+                <Breadcrumb>
+                    <Breadcrumb.Item>Rules</Breadcrumb.Item>
+                    <Breadcrumb.Item>Tradeshift V4 Debug Helper</Breadcrumb.Item>
+                </Breadcrumb>
 
-            </Collapse>
+                <Collapse bordered={false} defaultActiveKey={['1','2']}>
+                    <Panel header="Hack Urls" key="1">
+                        <InspectUrls />
+                    </Panel>
+                    <Panel header="App Mappings" key="2">
+                        2
+                    </Panel>
+
+                </Collapse>
+            </div>
         )
     }
 }

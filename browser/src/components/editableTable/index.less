@@ -1,14 +1,27 @@
-.editable-cell {
-  position: relative;
+@import '../../common/style.less';
+
+.editable-table{
+  .editable-cell {
+    position: relative;
+  }
+
+  .ant-table-thead > tr > th, .ant-table-tbody > tr > td{
+    padding: @tm-unit;
+  }
+
+  .editable-cell-value-wrap {
+    cursor: pointer;
+    min-height: 21px;
+  }
+
+  .editable-row:hover .editable-cell-value-wrap {
+    cursor: text;
+  }
+
+  .operation-buttons{
+    float: right;
+    margin: @tm-unit 0 ;
+  }
+
 }
 
-.editable-cell-value-wrap {
-  padding: 5px 12px;
-  cursor: pointer;
-}
-
-.editable-row:hover .editable-cell-value-wrap {
-  border: 1px solid #d9d9d9;
-  border-radius: 4px;
-  padding: 4px 11px;
-}

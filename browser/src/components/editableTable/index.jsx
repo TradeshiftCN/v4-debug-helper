@@ -1,8 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import './index.less';
-import { Table, Input, Button, Popconfirm, Form } from 'antd';
-import { ColumnProps } from 'antd/lib/table';
+import { Table, Input, Button, Form } from 'antd';
 
 const EditableContext = React.createContext(null);
 
@@ -41,24 +40,18 @@ class EditableCell extends React.Component {
 
     renderCell = form => {
         this.form = form;
-        const { children, dataIndex, record, title } = this.props;
+        const { children, dataIndex, record, rules } = this.props;
         const { editing } = this.state;
         return editing ? (
             <Form.Item style={{ margin: 0 }}>
                 {form.getFieldDecorator(dataIndex, {
-                    rules: [
-                        {
-                            required: true,
-                            message: `${title} is required.`,
-                        },
-                    ],
+                    rules,
                     initialValue: record[dataIndex],
                 })(<Input ref={node => (this.input = node)} onPressEnter={this.save} onBlur={this.save} />)}
             </Form.Item>
         ) : (
             <div
                 className="editable-cell-value-wrap"
-                style={{ paddingRight: 24 }}
                 onClick={this.toggleEdit}
             >
                 {children}
@@ -100,10 +93,10 @@ class EditableTable extends React.Component {
     }
 
     componentWillReceiveProps(props) {
-        this.state = {
+        this.setState({
             dataSource: props.dataSource,
-            count: props.dataSource.length,
-        };
+            count: props.dataSource.length
+        });
     }
 
     render() {
@@ -125,22 +118,24 @@ class EditableTable extends React.Component {
                     editable: col.editable,
                     dataIndex: col.dataIndex,
                     title: col.title,
+                    rules: col.rules,
                     handleSave: this.props.handleUpdate
                 }),
             };
         });
         return (
-            <div>
-                <Button onClick={this.props.handleAdd} type="primary" style={{ marginBottom: 16 }}>
-                    Add a row
-                </Button>
+            <div className="editable-table">
                 <Table
                     components={components}
                     rowClassName={() => 'editable-row'}
                     bordered
                     dataSource={dataSource}
                     columns={columns}
+                    pagination={{position: this.props.pagination || 'none'}}
                 />
+                <div className="operation-buttons clearfix">
+                    <Button onClick={this.props.handleAdd} type="primary">Add a line</Button>
+                </div>
             </div>
         );
     }
@@ -150,7 +145,8 @@ EditableTable.propTypes = {
     columns: PropTypes.array,
     dataSource: PropTypes.array,
     handleUpdate: PropTypes.func,
-    handleAdd: PropTypes.func
+    handleAdd: PropTypes.func,
+    pagination: PropTypes.string
 };
 
 export default EditableTable;
