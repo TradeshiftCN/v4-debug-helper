@@ -81,6 +81,44 @@ export const v4Inspector = {
                 .then(res => dispatch.v4Inspector.getV4InspectorConfigAsync())
                 .catch(res => dispatch.notification.error('DELETE V4 Inspector Url Failed', getErrorMessage(res)))
                 .finally(() => dispatch.spinner.hide());
+        },
+        async addAppMappingSync(newModel: AppRedirectMappingModel) {
+            dispatch.spinner.show();
+            return fetch(`${BASE_URL}/rules/v4-inspector/app-mapping`, {
+                method: 'POST',
+                body: JSON.stringify(newModel),
+                headers: {
+                    'content-type': 'application/json'
+                }
+            }).then(res => res.json())
+                .then(res => responseHandler(res))
+                .then(res => dispatch.v4Inspector.getV4InspectorConfigAsync())
+                .catch(res => dispatch.notification.error('Add App Redirect Mapping Failed', getErrorMessage(res)))
+                .finally(() => dispatch.spinner.hide());
+        },
+        async updateAppMappingSync(newModel: AppRedirectMappingModel) {
+            dispatch.spinner.show();
+            return fetch(`${BASE_URL}/rules/v4-inspector/app-mapping/${newModel.appId}`, {
+                method: 'PUT',
+                body: JSON.stringify(newModel),
+                headers: {
+                    'content-type': 'application/json'
+                }
+            }).then(res => res.json())
+                .then(res => responseHandler(res))
+                .then(res => dispatch.v4Inspector.getV4InspectorConfigAsync())
+                .catch(res => dispatch.notification.error('Update App Redirect Mapping Failed', getErrorMessage(res)))
+                .finally(() => dispatch.spinner.hide());
+        },
+        async deleteAppMappingSync(appId:string) {
+            dispatch.spinner.show();
+            return fetch(`${BASE_URL}/rules/v4-inspector/app-mapping/${appId}`, {
+                method: 'DELETE'
+            }).then(res => res.json())
+                .then(res => responseHandler(res))
+                .then(res => dispatch.v4Inspector.getV4InspectorConfigAsync())
+                .catch(res => dispatch.notification.error('DELETE App Redirect Mapping Failed', getErrorMessage(res)))
+                .finally(() => dispatch.spinner.hide());
         }
     })
 };

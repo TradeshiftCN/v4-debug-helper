@@ -133,8 +133,8 @@ class EditableTable extends React.Component {
                     columns={columns}
                     pagination={{position: this.props.pagination || 'none'}}
                 />
-                <div className="operation-buttons clearfix">
-                    <Button onClick={this.props.handleAdd} type="primary">Add a line</Button>
+                <div className="table-operation-buttons clearfix">
+                    <Button onClick={this.props.handleAdd} >Add a line</Button>
                 </div>
             </div>
         );

@@ -1,53 +1,53 @@
 import React from 'react'
-import {Button, Popconfirm} from 'antd';
+import { Button, Popconfirm } from 'antd';
 import { ColumnProps } from 'antd/lib/table';
 import { connect } from 'react-redux'
 
 import EditableTable from '../../../editableTable';
 
-import { InspectUrlModel } from '../../../../models/v4Inspector';
+import { AppRedirectMappingModel } from '../../../../models/v4Inspector';
 
 const mapState = (state:any) => ({
-    dataSource: state.v4Inspector.inspectUrls
+    dataSource: state.v4Inspector.appRedirectMapping
 });
 
 const mapDispatch = (dispatch: any) => ({
-    deleteAsync: dispatch.v4Inspector.deleteInspectUrlSync,
-    addSync: dispatch.v4Inspector.addInspectUrlsSync,
-    updateSync: dispatch.v4Inspector.updateInspectUrlSync,
+    deleteAsync: dispatch.v4Inspector.deleteAppMappingSync,
+    addSync: dispatch.v4Inspector.addAppMappingSync,
+    updateSync: dispatch.v4Inspector.updateAppMappingSync,
 });
 
 type connectedProps = ReturnType<typeof mapState> & ReturnType<typeof mapDispatch>
 type Props = connectedProps
 
-interface EditableColumnProps extends ColumnProps<InspectUrlModel> {
+interface EditableColumnProps extends ColumnProps<AppRedirectMappingModel> {
     editable?: boolean;
     rules?: any[];
 }
 
-class inspectorUrls extends React.PureComponent<Props>{
+class appMappings extends React.PureComponent<Props>{
     private columns : EditableColumnProps[] = [
         {
-            title: 'Id',
-            dataIndex: 'name',
+            title: 'App Id',
+            dataIndex: 'appId',
             width: '15%',
             editable: true,
             rules: [
                 {
                     required: true,
-                    message: `id is required.`,
+                    message: `app id is required.`,
                 }
             ]
         },
         {
-            title: 'Url Pattern',
+            title: 'Redirect Url',
             width: '70%',
-            dataIndex: 'pattern',
+            dataIndex: 'redirectUrl',
             editable: true,
             rules: [
                 {
                     required: true,
-                    message: `url pattern is required.`,
+                    message: `redirect url is required.`,
                 }
             ]
         },
@@ -55,11 +55,11 @@ class inspectorUrls extends React.PureComponent<Props>{
             title: 'Operations',
             dataIndex: 'operations',
             width: '15%',
-            render: (text:string, record:InspectUrlModel) =>
+            render: (text:string, record:AppRedirectMappingModel) =>
                 this.props.dataSource.length >= 1 ? (
                     <div className="line-operation-buttons">
                         <Button type="link" onClick={() => this.toggleLine(record)}>{record.enabled ? 'disable' : 'enable'}</Button>
-                        <Popconfirm title="Sure to delete?" onConfirm={() => this.props.deleteAsync(record.name)}>
+                        <Popconfirm title="Sure to delete?" onConfirm={() => this.props.deleteAsync(record.appId)}>
                             <Button type="link" className="delete-btn">delete</Button>
                         </Popconfirm>
                     </div>
@@ -76,15 +76,15 @@ class inspectorUrls extends React.PureComponent<Props>{
     }
 
     addNewLine() {
-        const newModel: InspectUrlModel = {
-            name: `id_${this.props.dataSource.length+1}`,
-            pattern: '',
+        const newModel: AppRedirectMappingModel = {
+            appId: `appId_${this.props.dataSource.length+1}`,
+            redirectUrl: '',
             enabled: false
         };
         this.props.addSync(newModel);
     }
 
-    toggleLine(record:InspectUrlModel) {
+    toggleLine(record:AppRedirectMappingModel) {
         const newModel = {
             ...record,
             enabled: !record.enabled
@@ -104,4 +104,4 @@ class inspectorUrls extends React.PureComponent<Props>{
     }
 }
 
-export default connect(mapState, mapDispatch)(inspectorUrls);
+export default connect(mapState, mapDispatch)(appMappings);

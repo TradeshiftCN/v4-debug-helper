@@ -3,6 +3,7 @@ import { Collapse, Breadcrumb } from 'antd';
 import { connect } from 'react-redux'
 
 import InspectUrls from './inspector-urls';
+import AppMappings from './app-mappings';
 
 const Panel = Collapse.Panel;
 
@@ -35,9 +36,8 @@ class v4Inspector extends React.PureComponent<Props>{
                         <InspectUrls />
                     </Panel>
                     <Panel header="App Mappings" key="2">
-                        2
+                        <AppMappings />
                     </Panel>
-
                 </Collapse>
             </div>
         )
