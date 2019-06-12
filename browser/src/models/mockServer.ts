@@ -4,7 +4,7 @@ import { responseHandler, getErrorMessage } from '../common/responseHandler';
 
 export interface MockRequestModel {
     method: string;
-    urlPattern: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'OPTIONS'
+    urlPattern: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'OPTIONS' | 'CONNECTED'
 }
 
 export interface MockResponseModel {
@@ -14,6 +14,7 @@ export interface MockResponseModel {
 }
 
 export interface MockRuleModel {
+    id?: string;
     name: string;
     request: MockRequestModel;
     response: MockResponseModel;
@@ -59,7 +60,7 @@ export const mockServer = {
         },
         async updateMockServerSync(newModel: MockRuleModel) {
             dispatch.spinner.show();
-            return fetch(`${BASE_URL}/rules/mock-server/mock/${newModel.name}`, {
+            return fetch(`${BASE_URL}/rules/mock-server/mock/${newModel.id}`, {
                 method: 'PUT',
                 body: JSON.stringify(newModel),
                 headers: {
@@ -71,9 +72,9 @@ export const mockServer = {
                 .catch(res => dispatch.notification.error('Update Mock Server Failed', getErrorMessage(res)))
                 .finally(() => dispatch.spinner.hide());
         },
-        async deleteMockServerSync(name:string) {
+        async deleteMockServerSync(id:string) {
             dispatch.spinner.show();
-            return fetch(`${BASE_URL}/rules/mock-server/mock/${name}`, {
+            return fetch(`${BASE_URL}/rules/mock-server/mock/${id}`, {
                 method: 'DELETE'
             }).then(res => res.json())
                 .then(res => responseHandler(res))

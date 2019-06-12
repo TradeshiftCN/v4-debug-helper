@@ -3,12 +3,14 @@ import Immutable from 'seamless-immutable';
 import { responseHandler, getErrorMessage } from '../common/responseHandler';
 
 export interface InspectUrlModel {
+    id?: string;
     name: string;
     pattern: string;
     enabled: boolean;
 }
 
 export interface AppRedirectMappingModel {
+    id?: string;
     appId: string;
     redirectUrl: string;
     enabled: boolean;
@@ -54,7 +56,7 @@ export const v4Inspector = {
         },
         async updateInspectUrlSync(newModel: InspectUrlModel) {
             dispatch.spinner.show();
-            return fetch(`${BASE_URL}/rules/v4-inspector/hack-url/${newModel.name}`, {
+            return fetch(`${BASE_URL}/rules/v4-inspector/hack-url/${newModel.id}`, {
                 method: 'PUT',
                 body: JSON.stringify(newModel),
                 headers: {
@@ -66,9 +68,9 @@ export const v4Inspector = {
                 .catch(res => dispatch.notification.error('Update V4 Inspector Url Failed', getErrorMessage(res)))
                 .finally(() => dispatch.spinner.hide());
         },
-        async deleteInspectUrlSync(name:string) {
+        async deleteInspectUrlSync(id:string) {
             dispatch.spinner.show();
-            return fetch(`${BASE_URL}/rules/v4-inspector/hack-url/${name}`, {
+            return fetch(`${BASE_URL}/rules/v4-inspector/hack-url/${id}`, {
                 method: 'DELETE'
             }).then(res => res.json())
                 .then(res => responseHandler(res))
@@ -92,7 +94,7 @@ export const v4Inspector = {
         },
         async updateAppMappingSync(newModel: AppRedirectMappingModel) {
             dispatch.spinner.show();
-            return fetch(`${BASE_URL}/rules/v4-inspector/app-mapping/${newModel.appId}`, {
+            return fetch(`${BASE_URL}/rules/v4-inspector/app-mapping/${newModel.id}`, {
                 method: 'PUT',
                 body: JSON.stringify(newModel),
                 headers: {
@@ -104,9 +106,9 @@ export const v4Inspector = {
                 .catch(res => dispatch.notification.error('Update App Redirect Mapping Failed', getErrorMessage(res)))
                 .finally(() => dispatch.spinner.hide());
         },
-        async deleteAppMappingSync(appId:string) {
+        async deleteAppMappingSync(id:string) {
             dispatch.spinner.show();
-            return fetch(`${BASE_URL}/rules/v4-inspector/app-mapping/${appId}`, {
+            return fetch(`${BASE_URL}/rules/v4-inspector/app-mapping/${id}`, {
                 method: 'DELETE'
             }).then(res => res.json())
                 .then(res => responseHandler(res))

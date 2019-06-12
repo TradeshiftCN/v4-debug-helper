@@ -28,14 +28,14 @@ interface EditableColumnProps extends ColumnProps<InspectUrlModel> {
 class inspectorUrls extends React.PureComponent<Props>{
     private columns : EditableColumnProps[] = [
         {
-            title: 'Id',
+            title: 'Name',
             dataIndex: 'name',
             width: '15%',
             editable: true,
             rules: [
                 {
                     required: true,
-                    message: `id is required.`,
+                    message: `name is required.`,
                 }
             ]
         },
@@ -59,7 +59,7 @@ class inspectorUrls extends React.PureComponent<Props>{
                 this.props.dataSource.length >= 1 ? (
                     <div className="line-operation-buttons">
                         <Button type="link" onClick={() => this.toggleLine(record)}>{record.enabled ? 'disable' : 'enable'}</Button>
-                        <Popconfirm title="Sure to delete?" onConfirm={() => this.props.deleteAsync(record.name)}>
+                        <Popconfirm title="Sure to delete?" onConfirm={() => this.props.deleteAsync(record.id)}>
                             <Button type="link" className="delete-btn">delete</Button>
                         </Popconfirm>
                     </div>
