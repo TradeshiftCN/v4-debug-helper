@@ -8,6 +8,7 @@ import Home from './components/home';
 import Config from './components/config';
 import Help from './components/help';
 import V4Inspector from './components/rules/v4-inspector';
+import MockServer from './components/rules/mock-server';
 
 import './app.less';
 
@@ -47,6 +48,7 @@ class App extends React.PureComponent{
                                 <Route path="/config/" component={Config} />
                                 <Route path="/help/" component={Help} />
                                 <Route path="/rules/v4-inspector/" component={V4Inspector} />
+                                <Route path="/rules/mock-server/" component={MockServer} />
                             </Content>
                         </Layout>
                     </Router>

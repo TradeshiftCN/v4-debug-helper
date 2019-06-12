@@ -27,8 +27,8 @@ class v4Inspector extends React.PureComponent<Props>{
         return (
             <div>
                 <Breadcrumb>
-                    <Breadcrumb.Item>Rules</Breadcrumb.Item>
-                    <Breadcrumb.Item>Tradeshift V4 Debug Helper</Breadcrumb.Item>
+                    <Breadcrumb.Item href="/">Rules</Breadcrumb.Item>
+                    <Breadcrumb.Item href="/rules/v4-inspector/">Tradeshift V4 Debug Helper</Breadcrumb.Item>
                 </Breadcrumb>
 
                 <Collapse bordered={false} defaultActiveKey={['1','2']}>

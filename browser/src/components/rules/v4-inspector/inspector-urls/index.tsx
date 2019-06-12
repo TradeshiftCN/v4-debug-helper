@@ -34,8 +34,7 @@ class inspectorUrls extends React.PureComponent<Props>{
             editable: true,
             rules: [
                 {
-                    required: true,
-                    message: `name is required.`,
+                    required: true
                 }
             ]
         },
@@ -46,8 +45,7 @@ class inspectorUrls extends React.PureComponent<Props>{
             editable: true,
             rules: [
                 {
-                    required: true,
-                    message: `url pattern is required.`,
+                    required: true
                 }
             ]
         },
@@ -77,7 +75,7 @@ class inspectorUrls extends React.PureComponent<Props>{
 
     addNewLine() {
         const newModel: InspectUrlModel = {
-            name: `id_${this.props.dataSource.length+1}`,
+            name: `name_${this.props.dataSource.length+1}`,
             pattern: '',
             enabled: false
         };

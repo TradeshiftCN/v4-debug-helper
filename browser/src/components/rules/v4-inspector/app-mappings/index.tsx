@@ -14,7 +14,7 @@ const mapState = (state:any) => ({
 const mapDispatch = (dispatch: any) => ({
     deleteAsync: dispatch.v4Inspector.deleteAppMappingSync,
     addSync: dispatch.v4Inspector.addAppMappingSync,
-    updateSync: dispatch.v4Inspector.updateAppMappingSync,
+    updateSync: dispatch.v4Inspector.updateAppMappingSync
 });
 
 type connectedProps = ReturnType<typeof mapState> & ReturnType<typeof mapDispatch>
@@ -34,8 +34,7 @@ class appMappings extends React.PureComponent<Props>{
             editable: true,
             rules: [
                 {
-                    required: true,
-                    message: `app id is required.`,
+                    required: true
                 }
             ]
         },
@@ -46,8 +45,7 @@ class appMappings extends React.PureComponent<Props>{
             editable: true,
             rules: [
                 {
-                    required: true,
-                    message: `redirect url is required.`,
+                    required: true
                 }
             ]
         },
@@ -67,7 +65,6 @@ class appMappings extends React.PureComponent<Props>{
                 ) : null,
         }
     ];
-
 
     constructor(props:Props){
         super(props);

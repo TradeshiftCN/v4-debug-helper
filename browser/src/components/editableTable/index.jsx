@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import './index.less';
 import { Table, Input, Button, Form } from 'antd';
+import * as _ from 'lodash';
 
 const EditableContext = React.createContext(null);
 
@@ -34,7 +35,7 @@ class EditableCell extends React.Component {
                 return;
             }
             this.toggleEdit();
-            handleSave({ ...record, ...values });
+            handleSave(_.merge({},record, values));
         });
     };
 
@@ -46,7 +47,7 @@ class EditableCell extends React.Component {
             <Form.Item style={{ margin: 0 }}>
                 {form.getFieldDecorator(dataIndex, {
                     rules,
-                    initialValue: record[dataIndex],
+                    initialValue: _.get(record, dataIndex),
                 })(<Input ref={node => (this.input = node)} onPressEnter={this.save} onBlur={this.save} />)}
             </Form.Item>
         ) : (
@@ -134,7 +135,7 @@ class EditableTable extends React.Component {
                     pagination={{position: this.props.pagination || 'none'}}
                 />
                 <div className="table-operation-buttons clearfix">
-                    <Button onClick={this.props.handleAdd} >Add a line</Button>
+                    <Button type="dashed" onClick={this.props.handleAdd} >+ Add a line</Button>
                 </div>
             </div>
         );

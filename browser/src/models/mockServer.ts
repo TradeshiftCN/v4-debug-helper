@@ -2,15 +2,24 @@ import Immutable from 'seamless-immutable';
 
 import { responseHandler, getErrorMessage } from '../common/responseHandler';
 
+export enum HttpMethod {
+    GET = 'GET',
+    POST = 'POST',
+    PUT = 'PUT',
+    DELETE = 'DELETE',
+    OPTIONS = 'OPTIONS',
+    CONNECTED = 'CONNECTED'
+}
+
 export interface MockRequestModel {
-    method: string;
-    urlPattern: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'OPTIONS' | 'CONNECTED'
+    method: HttpMethod
+    urlPattern: string;
 }
 
 export interface MockResponseModel {
     statusCode: number;
-    header: Map<string, string>;
-    body: any;
+    header: object;
+    body: string;
 }
 
 export interface MockRuleModel {
@@ -40,7 +49,7 @@ export const mockServer = {
             return fetch(`${BASE_URL}/rules/mock-server/config`)
                 .then(res =>res.json())
                 .then(res => responseHandler(res))
-                .then(res => dispatch.mockServer.updateMockServerConfig(res.data))
+                .then(res => dispatch.mockServer.updateMockServerConfig(res.data && res.data.rules))
                 .catch(res => dispatch.notification.error('Get Mock Server Config Failed', getErrorMessage(res)))
                 .finally(() => dispatch.spinner.hide());
         },
