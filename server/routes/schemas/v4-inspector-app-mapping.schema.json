@@ -2,6 +2,10 @@
   "id": "v4-inspector-app-mapping",
   "type": "object",
   "properties": {
+    "id": {
+      "type": "string",
+      "required": false
+    },
     "appId": {
       "type": "string",
       "required": true

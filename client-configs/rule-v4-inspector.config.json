@@ -1,0 +1,36 @@
+{
+  "inspectUrls": [
+    {
+      "id": "291e4e2a-c105-43c2-83bc-dfa40f4f5abc",
+      "name": "testing",
+      "pattern": "https://dev.cn-northwest-1.test.bwtsi.cn/v4/apps/Tradeshift\\.\\w+",
+      "enabled": true
+    },
+    {
+      "id": "3525f81b-2cc3-4957-b3fb-5de17a2505af",
+      "name": "sandbox",
+      "pattern": "https://sandbox.tradeshiftchina.cn/v4/apps/Tradeshift\\.\\w+",
+      "enabled": true
+    },
+    {
+      "id": "871b533e-7180-4c1d-b8c3-43bc306d10d0",
+      "name": "prod",
+      "pattern": "https://go.tradeshiftchina.com/v4/apps/Tradeshift\\.\\w+",
+      "enabled": true
+    },
+    {
+      "id": "4de0893a-5f2e-4404-be05-ffa77d237e59",
+      "name": "localStack",
+      "pattern": "http://10.133.d+.d+:8080/v4/apps/Tradeshift\\.\\w+",
+      "enabled": true
+    }
+  ],
+  "appRedirectMapping": [
+    {
+      "id": "f1cf9f75-67f9-4d6a-93de-0ff1a8cc2442",
+      "appId": "AppStore",
+      "redirectUrl": "http://localhost:8321",
+      "enabled": true
+    }
+  ]
+}

@@ -22,20 +22,20 @@ class ConfigService {
     }
 
     getSystemConfig() {
-        return requireForce('../../client-configs/local/system.config');
+        return requireForce('../../client-configs/local/system.config.json');
     }
 
     getRuleV4InspectorConfig() {
-        return requireForce('../../client-configs/local/rule-v4-inspector.config');
+        return requireForce('../../client-configs/local/rule-v4-inspector.config.json');
     }
 
     getRuleMockServerConfig() {
-        return requireForce('../../client-configs/local/rule-mock-server.config');
+        return requireForce('../../client-configs/local/rule-mock-server.config.json');
     }
 
     saveConfig(configName, value){
-        const content = 'module.exports = ' + JSON.stringify(value, null, 4)
-        fs.writeFileSync(path.resolve(__dirname, `../../client-configs/local/${configName}.js`), content);
+        const content = JSON.stringify(value, null, 4);
+        fs.writeFileSync(path.resolve(__dirname, `../../client-configs/local/${configName}.json`), content);
     }
 
     restoreToInit() {

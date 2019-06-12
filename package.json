@@ -20,7 +20,8 @@
     "lodash": "^4.17.11",
     "prop-types": "^15.7.2",
     "request-promise": "^4.2.2",
-    "require-from-string": "^2.0.2"
+    "require-from-string": "^2.0.2",
+    "uuid": "^3.3.2"
   },
   "devDependencies": {
     "nodemon": "^1.19.0"

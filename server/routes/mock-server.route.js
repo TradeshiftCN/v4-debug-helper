@@ -1,5 +1,6 @@
 const _ = require('lodash');
 const router = require('express').Router();
+const uuid = require('uuid');
 const ConfigService = require('../service/config.service');
 const Response = require('../service/response.dto');
 const schemaValidator = require('../service/schema.validator');
@@ -17,10 +18,13 @@ router.get('/config', (req, res) => {
  * new mock
  */
 router.post('/mock', schemaValidator(mockServerRuleSchema), (req, res) => {
+    if(!req.body.id){
+        req.body.id = uuid.v4();
+    }
     let config = ConfigService.getRuleMockServerConfig();
-    if (config.rules.find(rule => rule.name === req.body.name)) {
+    if (config.rules.find(rule => rule.id === req.body.id)) {
         res.status(403).send(new Response({
-            error: `mock rule ${req.body.name} already exits`
+            error: `mock rule ${req.body.id} already exits`
         }));
     } else {
         config.rules.push(req.body);
@@ -34,10 +38,11 @@ router.post('/mock', schemaValidator(mockServerRuleSchema), (req, res) => {
 /**
  * update mock
  */
-router.put('/mock/:name', schemaValidator(mockServerRuleSchema), (req, res) => {
+router.put('/mock/:id', schemaValidator(mockServerRuleSchema), (req, res) => {
     let config = ConfigService.getRuleMockServerConfig();
-    let matched = config.rules.find(rule => rule.name === req.params.name);
+    let matched = config.rules.find(rule => rule.id === req.params.id);
     if (matched) {
+        delete req.body.id;
         _.extend(matched, req.body);
         updateConfig(config);
         res.send(new Response({
@@ -53,9 +58,9 @@ router.put('/mock/:name', schemaValidator(mockServerRuleSchema), (req, res) => {
 /**
  * delete mock
  */
-router.delete('/mock/:name', (req, res) => {
+router.delete('/mock/:id', (req, res) => {
     let config = ConfigService.getRuleMockServerConfig();
-    config.rules = config.rules.filter(rule => rule.name !== req.params.name);
+    config.rules = config.rules.filter(rule => rule.id !== req.params.id);
     updateConfig(config);
     res.send(new Response({
         data: 'success'

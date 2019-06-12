@@ -2,6 +2,10 @@
   "id": "v4-inspector-hack-url",
   "type": "object",
   "properties": {
+    "id": {
+      "type": "string",
+      "required": false
+    },
     "name": {
       "type": "string",
       "required": true

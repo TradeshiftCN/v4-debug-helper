@@ -3,7 +3,6 @@ const Response = require('./response.dto');
 
 const schemaValidator = (schema) => {
     return (req, res, next) => {
-        console.log('----req.body------', req.body.proxyPort);
         const result = validate(req.body, schema);
         if(result.errors.length > 0){
             res.status(403).send(new Response({

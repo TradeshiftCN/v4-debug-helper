@@ -2,6 +2,10 @@
   "id": "mocker-server-rule",
   "type": "object",
   "properties": {
+    "id": {
+      "type": "string",
+      "required": false
+    },
     "name": {
       "type": "string",
       "required": true

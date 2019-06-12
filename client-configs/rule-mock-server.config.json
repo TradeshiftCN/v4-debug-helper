@@ -1,0 +1,50 @@
+{
+  "rules": [
+    {
+      "id": "b3475961-ff37-4b94-a34c-6c663bb6abe0",
+      "name": "a custom name",
+      "request": {
+        "method": "GET",
+        "urlPattern": "https://api-sandbox.tradeshiftchina.cn/tradeshift/rest/external/account/info/user/"
+      },
+      "enabled": true,
+      "response": {
+        "statusCode": 200,
+        "header": {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*"
+        },
+        "body": "{\"id\": \"sfsfsf\"}"
+      }
+    },
+    {
+      "id": "0ba32c8e-07f0-4197-ae87-ff9556ddf208",
+      "name": "user",
+      "request": {
+        "method": "GET",
+        "urlPattern": "https://api-sandbox.tradeshiftchina.cn/tradeshift/rest/external/account/info/user"
+      },
+      "enabled": true,
+      "response": {
+        "body": "{\"id\": \"sfsfsf\"}"
+      }
+    },
+    {
+      "id": "cd133592-483d-4d9e-be61-13657d5c7390",
+      "name": "store",
+      "request": {
+        "method": "GET",
+        "urlPattern": "https://api-sandbox.tradeshiftchina.cn/tradeshift/rest/external/apps/store/categories"
+      },
+      "enabled": true,
+      "response": {
+        "statusCode": 200,
+        "header": {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "https://sandbox.tradeshiftchina.cn"
+        },
+        "body": "\n                    function test(request) {return {id: request.url}};\n                    module.exports = test;\n                "
+      }
+    }
+  ]
+}
