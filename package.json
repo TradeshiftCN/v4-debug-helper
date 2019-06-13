@@ -15,8 +15,8 @@
   "scripts": {
     "start": "node server/index.js",
     "electron": "electron .",
-    "pack": "export ELECTRON_BUILDER_ALLOW_UNRESOLVED_DEPENDENCIES=true && electron-builder --dir",
-    "dist": "export ELECTRON_BUILDER_ALLOW_UNRESOLVED_DEPENDENCIES=true && electron-builder",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder",
     "postinstall": "electron-builder install-app-deps"
   },
   "author": "lil@tradeshift.com",

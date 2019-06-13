@@ -100,5 +100,5 @@ npm run build
 
 cd ..
 npm ci
-npm run dist
+export ELECTRON_BUILDER_ALLOW_UNRESOLVED_DEPENDENCIES=true && npm run dist
 ```
