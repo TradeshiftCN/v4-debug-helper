@@ -1,10 +1,23 @@
 {
-  "name": "v4-debug-helper",
+  "name": "ts-middleman",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "main.js",
+  "build": {
+    "appId": "trdeshift.ts-middleman",
+    "mac": {
+      "icon": "build/icon.png"
+    },
+    "win": {
+      "icon": "build/icon.png"
+    }
+  },
   "scripts": {
-    "start": "node server/index.js"
+    "start": "node server/index.js",
+    "electron": "electron .",
+    "pack": "export ELECTRON_BUILDER_ALLOW_UNRESOLVED_DEPENDENCIES=true && electron-builder --dir",
+    "dist": "export ELECTRON_BUILDER_ALLOW_UNRESOLVED_DEPENDENCIES=true && electron-builder",
+    "postinstall": "electron-builder install-app-deps"
   },
   "author": "lil@tradeshift.com",
   "license": "ISC",
@@ -24,6 +37,8 @@
     "uuid": "^3.3.2"
   },
   "devDependencies": {
+    "electron": "^2.0.18",
+    "electron-builder": "^20.43.0",
     "nodemon": "^1.19.0"
   }
 }

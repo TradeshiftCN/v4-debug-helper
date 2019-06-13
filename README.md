@@ -88,3 +88,17 @@ npm install
 
 Enjoy!
 
+
+
+## Electron
+
+### 打包
+```
+cd browser
+npm ci
+npm run build
+
+cd ..
+npm ci
+npm run dist
+```

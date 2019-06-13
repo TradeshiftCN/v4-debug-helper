@@ -1,3 +1,4 @@
+import { shim } from 'promise.prototype.finally';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
@@ -5,7 +6,7 @@ import App from './app';
 import { Provider } from 'react-redux';
 import { store } from './store'
 import * as serviceWorker from './serviceWorker';
-
+shim();
 ReactDOM.render(
     <Provider store={store}>
         <App />

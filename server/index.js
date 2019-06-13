@@ -1,5 +1,6 @@
 const getPort = require('get-port');
 const express = require('express');
+const path = require('path');
 const app = express();
 const bodyParser = require('body-parser');
 const serverRoutes = require('./routes/index');
@@ -16,6 +17,7 @@ const initConfig = async () => {
 
     await initConfig();
 
+    app.use(express.static(path.resolve(__dirname, '../browser/build/')));
 
     app.all('*', (req, res, next) => {
         res.setHeader("Access-Control-Allow-Origin", "*");
