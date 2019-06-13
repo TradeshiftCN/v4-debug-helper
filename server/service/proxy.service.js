@@ -1,6 +1,7 @@
 const AnyProxy = require('anyproxy');
 const getPort = require('get-port');
 const waitUntil = require('async-wait-until');
+const co = require('co');
 
 const mockServerRule = require('../rules/builtin/mock-server/index');
 const v4InspectRule = require('../rules/builtin/v4-inspector/index');
@@ -110,6 +111,24 @@ class ProxyService {
 
     async isPortInUse(port) {
         return port !== await getPort({port});
+    }
+
+
+    async getRootCAPath()  {
+        const status = await co(AnyProxy.utils.certMgr.getCAStatus());
+        return new Promise((resolve, reject) => {
+            if (!status.exist) {
+                AnyProxy.utils.certMgr.generateRootCA((error, keyPath, crtPath) => {
+                    if (!error) {
+                        resolve(AnyProxy.utils.certMgr.getRootCAFilePath());
+                    } else {
+                        reject('failed to generate rootCA', error);
+                    }
+                });
+            } else {
+                resolve(AnyProxy.utils.certMgr.getRootCAFilePath());
+            }
+        });
     }
 
 }
