@@ -40,7 +40,7 @@ class inspectorUrls extends React.PureComponent<Props>{
         },
         {
             title: 'Url Pattern',
-            width: '70%',
+            width: '60%',
             dataIndex: 'pattern',
             editable: true,
             rules: [
@@ -52,7 +52,7 @@ class inspectorUrls extends React.PureComponent<Props>{
         {
             title: 'Operations',
             dataIndex: 'operations',
-            width: '15%',
+            width: '25%',
             render: (text:string, record:InspectUrlModel) =>
                 this.props.dataSource.length >= 1 ? (
                     <div className="line-operation-buttons">

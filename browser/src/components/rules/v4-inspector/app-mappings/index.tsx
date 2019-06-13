@@ -40,7 +40,7 @@ class appMappings extends React.PureComponent<Props>{
         },
         {
             title: 'Redirect Url',
-            width: '70%',
+            width: '60%',
             dataIndex: 'redirectUrl',
             editable: true,
             rules: [
@@ -52,7 +52,7 @@ class appMappings extends React.PureComponent<Props>{
         {
             title: 'Operations',
             dataIndex: 'operations',
-            width: '15%',
+            width: '25%',
             render: (text:string, record:AppRedirectMappingModel) =>
                 this.props.dataSource.length >= 1 ? (
                     <div className="line-operation-buttons">
