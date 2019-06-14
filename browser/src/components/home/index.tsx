@@ -10,9 +10,9 @@ const Home = () => {
     return (
         <div className="home">
             <div className="desc-container">
-                <Title>TS MIDDLEMAN - response hijacker </Title>
+                <Title>TS MIDDLEMAN - Response Hijacker </Title>
                 <Paragraph>
-                    add some description here, add some description here, add some description here, ae des
+                    ^_^ A magic debug tool for TS engineer.
                 </Paragraph>
             </div>
             <Divider />
@@ -26,4 +26,3 @@ const Home = () => {
 };
 
 export default Home;
-

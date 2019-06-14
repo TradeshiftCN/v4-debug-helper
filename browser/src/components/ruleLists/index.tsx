@@ -1,5 +1,5 @@
 import React from 'react';
-import {List, Switch, Icon} from 'antd';
+import {List, Switch, Icon, Tooltip} from 'antd';
 import { connect } from 'react-redux'
 import {Link} from 'react-router-dom';
 
@@ -11,13 +11,13 @@ const mapState = (state:any) => ({
             {
                 id: 'v4-inspector',
                 name: 'Tradeshift V4 App Debug Helper',
-                desc: "this is decs this is decs this is decs ",
+                desc: "use online environment to debug local code",
                 enabled: state.system.v4InspectorEnabled
             },
             {
                 id: 'mock-server',
                 name: 'Mock Server',
-                desc: "this is decs this is decs this is decs ",
+                desc: "mock server to response your local request",
                 enabled: state.system.mockServerEnabled
             }
         ];
@@ -49,7 +49,11 @@ const RuleLists = (props: any) => {
             dataSource={props.ruleList()}
             renderItem={(item:any) => (
                 <List.Item actions={[
-                    <Link to={'/rules/'+item.id}><Icon className="edit-icon" type="edit" /></Link>,
+                    <Link to={'/rules/'+item.id}>
+                        <Tooltip title="Click to edit the configuration">
+                            <Icon className="edit-icon" type="edit" />
+                        </Tooltip>
+                    </Link>,
                     <Switch checked={item.enabled} onClick={(checked:boolean) => toggleRule(props, item.id, checked)} />
                 ]}>
                     <List.Item.Meta
@@ -63,4 +67,3 @@ const RuleLists = (props: any) => {
 };
 
 export default connect(mapState, mapDispatch)(RuleLists);
-
