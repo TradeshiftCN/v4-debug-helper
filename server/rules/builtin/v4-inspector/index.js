@@ -33,7 +33,7 @@ const insertConfig = (html, configScript, redirectIndex) => {
             $(element).html(' ');
         }
     });
-    $('body').append(`<div id="v4InspectorFlag" ondblclick="document.querySelector('#v4InspectorFlag').remove()" style="color: lightgrey;font-size: 60px;z-index: 99999999;position: fixed;top:10%;">Proxied By V4-debug-helper</div>`);
+    $('body').append(`<div id="v4InspectorFlag" ondblclick="document.querySelector('#v4InspectorFlag').remove()" style="color: lightgrey;font-size: 32px;z-index: 99999999;position: fixed;top:5%;left: 35%">Proxied By V4-debug-helper</div>`);
     return $.html();
 };
 
