@@ -1,11 +1,15 @@
 const path = require('path');
 const fs = require('fs');
 const fse = require('fs-extra')
+const os = require('os');
 
-const requireForce = (module) => {
-    delete require.cache[require.resolve(module)];
-    return require(module);
+const requireForce = (fileName) => {
+    const moduleName = `${localConfigDir}/${fileName}`
+    delete require.cache[require.resolve(moduleName)];
+    return require(moduleName);
 };
+
+const localConfigDir = `${os.homedir()}/.ts-middleman/config`;
 
 class ConfigService {
 
@@ -13,33 +17,33 @@ class ConfigService {
      * generate local config files if not exits
      */
     init(){
-        const ruleLocalConfigDir = path.resolve(__dirname, '../../client-configs/local/');
+        const ruleLocalConfigDir = localConfigDir;
         if(!fs.existsSync(ruleLocalConfigDir)){
             const configFiles = fs.readdirSync(path.resolve(__dirname, '../../client-configs/'));
-            fs.mkdirSync(ruleLocalConfigDir);
-            configFiles.forEach(fileName => fs.copyFileSync(path.resolve(__dirname, '../../client-configs/'+fileName), ruleLocalConfigDir + path.sep +fileName));
+            fse.mkdirpSync(ruleLocalConfigDir);
+            fse.copySync(path.resolve(__dirname, '../../client-configs'), ruleLocalConfigDir);
         }
     }
 
     getSystemConfig() {
-        return requireForce('../../client-configs/local/system.config.json');
+        return requireForce('system.config.json');
     }
 
     getRuleV4InspectorConfig() {
-        return requireForce('../../client-configs/local/rule-v4-inspector.config.json');
+        return requireForce('rule-v4-inspector.config.json');
     }
 
     getRuleMockServerConfig() {
-        return requireForce('../../client-configs/local/rule-mock-server.config.json');
+        return requireForce('rule-mock-server.config.json');
     }
 
     saveConfig(configName, value){
         const content = JSON.stringify(value, null, 4);
-        fs.writeFileSync(path.resolve(__dirname, `../../client-configs/local/${configName}.json`), content);
+        fs.writeFileSync(path.resolve(__dirname, `${localConfigDir}/${configName}.json`), content);
     }
 
     restoreToInit() {
-        fse.removeSync(path.resolve(__dirname, '../../client-configs/local'));
+        fse.removeSync(localConfigDir);
         this.init();
     }
 }
