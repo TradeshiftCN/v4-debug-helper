@@ -33,7 +33,7 @@ router.get('/status', (req, res) => {
     }));
 });
 
-router.put('/rootca', async (req, res) => {
+router.get('/rootca', async (req, res) => {
     const rootCAPath = await proxyService.getRootCAPath();
     const fileType = certFileTypes.indexOf(req.query.type) !== -1 ? req.query.type : 'crt';
     res.setHeader('Content-Type', 'application/x-x509-ca-cert');
