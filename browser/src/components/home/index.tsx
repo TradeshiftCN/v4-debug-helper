@@ -11,7 +11,7 @@ const Home = () => {
         <div className="home">
             <div className="desc-container">
                 <Title>TS MIDDLEMAN - Response Hijacker</Title>
-                <Paragraph><Text strong>Ultimate Solution for Frontend Debug</Text></Paragraph>
+                <Paragraph><Text strong>Ultimate Solution For Frontend Debug</Text></Paragraph>
             </div>
             <Divider />
             <div className="rule-list-container">

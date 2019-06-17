@@ -13,7 +13,7 @@ TS MIDDLEMAN is a multi-platform and multi-browser supported frontend debug tool
 
 ## How to use
 
-1. Go to [releases](https://github.com/TradeshiftCN/v4-debug-helper/releases) page to download and install the latest version.
+1. Go to [releases](https://github.com/BaiwangTradeshift/v4-debug-helper/releases) page to download and install the latest version.
 2. Follow the use guide in help page to setup the environment.
 
 ## How to develop
@@ -23,7 +23,7 @@ This section is only for `ts-middleman` developer, please omit it if you only wa
 ### Environment Required
 
 - Node: `>=8`
-- Npm: `>5`
+- Npm: `>=6`
 
 
 ### Install dependencies
