@@ -19,9 +19,9 @@ class ConfigService {
     init(){
         const ruleLocalConfigDir = localConfigDir;
         if(!fs.existsSync(ruleLocalConfigDir)){
-            const configFiles = fs.readdirSync(path.resolve(__dirname, '../../client-configs/'));
+            const configFiles = fs.readdirSync(path.resolve(__dirname, '../configs/'));
             fse.mkdirpSync(ruleLocalConfigDir);
-            fse.copySync(path.resolve(__dirname, '../../client-configs'), ruleLocalConfigDir);
+            fse.copySync(path.resolve(__dirname, '../configs'), ruleLocalConfigDir);
         }
     }
 

@@ -32,9 +32,8 @@ class CacheService {
     }
 
     getProxyUIPort() {
-        // todo remove hard code
-        // return this.getValue(PROXY_UI_PORT);
-        return 8002;
+        return this.getValue(PROXY_UI_PORT);
+        // return 8002;
     }
 }
 

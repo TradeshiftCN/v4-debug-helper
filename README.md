@@ -81,7 +81,5 @@ npm run build
 ### Build to runnable application
 
 ```
-cd ..
-npm ci
 export ELECTRON_BUILDER_ALLOW_UNRESOLVED_DEPENDENCIES=true && npm run dist
 ```
