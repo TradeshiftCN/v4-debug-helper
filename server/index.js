@@ -18,7 +18,6 @@ const initConfig = async () => {
     await initConfig();
 
     app.use(express.static(path.resolve(__dirname, '../browser/build/')));
-    app.use(express.static(path.resolve(__dirname, '../assets/')));
 
     app.all('*', (req, res, next) => {
         res.setHeader("Access-Control-Allow-Origin", "*");

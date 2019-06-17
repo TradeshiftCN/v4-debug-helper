@@ -10,14 +10,11 @@ const Home = () => {
     return (
         <div className="home">
             <div className="desc-container">
-                <Title>TS MIDDLEMAN - Response Hijacker </Title>
-                <Paragraph>
-                    ^_^ A magic debug tool for TS engineer.
-                </Paragraph>
+                <Title>TS MIDDLEMAN - Response Hijacker</Title>
+                <Paragraph><Text strong>Ultimate Solution for Frontend Debug</Text></Paragraph>
             </div>
             <Divider />
             <div className="rule-list-container">
-                <Text strong={true}>Rule List</Text>
                 <RuleList />
             </div>
         </div>
