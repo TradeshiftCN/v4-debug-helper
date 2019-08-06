@@ -10,6 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "anyproxy": "^4.0.12",
+    "axios": "^0.19.0",
     "cheerio": "^1.0.0-rc.2",
     "request-promise": "^4.2.2"
   }

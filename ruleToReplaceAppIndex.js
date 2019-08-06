@@ -1,13 +1,27 @@
 const config = require('./config.json');
 const rp = require('request-promise');
 const cheerio = require('cheerio');
+const get = require('lodash/get');
+const axios = require('axios')
+const merge = require('lodash/merge')
 
 const hackUrlReg = /^https?:\/\/.*(\.bwtsi\.cn|\.tradeshift\.com|\.tradeshiftchina\.cn|10\.133\.\d+\.\d+:8080)\/v4\/apps\/\w+\.\w+$/;
+const jenkins = /.*cn\.ci\.bwtsi\.cn.*/
 
-const getConfigScript = html => html.match(/<script type="text\/javascript">\s+var __config = \{.+\};\s+<\/script>/)[0];
+const getConfigScript = html => get(html.match(/<script type="text\/javascript">\s+var __config = \{.+\};\s+<\/script>/), 0, '');
 
 const getAppNameFromUrl = requestUrl => requestUrl.match(/Tradeshift\..+/)[0].replace('Tradeshift.', '');
 
+const wanted = [
+    'InventoryManagement',
+    'ReportToolkit',
+    'GoodsReceipt',
+    'InsightCenter',
+    'PurchaseRequestV2',
+    'DelegateInventory',
+    'Configurator',
+    'ViewManager',
+]
 // 重新组织config.json里面的config.redirectV4AppIndexUrl数据
 // 返回值类型是{'DEFAULT': 'redirect_url', appName: 'redirect_url', ...}
 const prepareRedirectData = () => {
@@ -49,15 +63,44 @@ const insertConfig = (html, configScript, redirectIndex) => {
         }
 
     });
-    $('body').append(`<div style="color: lightgrey;font-size: 60px;z-index: 99999999;position: fixed;top:10%;">Proxied By V4-debug-helper</div>`);
-
     return $.html();
 };
 
 module.exports = {
     summary: 'a rule to replace app index',
+    *beforeSendRequest(requestDetail) {
+        const proxyHead = 'wf-proxy'
+        if(requestDetail.url.includes(proxyHead)) {
+            let hostIp;
+            if(requestDetail.url.includes('cn-inventory-management')) {
+                hostIp = '10.133.9.129:8805'
+            }else {
+                hostIp = '10.133.8.179:8661'
+            }
+            const targetHost = `http://${hostIp}`
+            return axios.get(`${targetHost}${requestDetail.url.split(proxyHead)[1]}`, {
+                headers: merge(requestDetail.requestOptions.headers, {
+                    Host: hostIp
+                })
+            })
+            .then(({ status, headers, data }) =>{
+                return {
+                    response: {
+                        statusCode: status,
+                        header: headers,
+                        body: JSON.stringify(data)
+                    }
+                }
+            })
+            .catch(e => console.log(e))
+        }
+    },
     *beforeSendResponse(requestDetail, responseDetail) {
-        if(hackUrlReg.test(requestDetail.url)) {
+        const originUrl = requestDetail.url.split('?')[0] || ''
+        if( !jenkins.test(originUrl)
+            && hackUrlReg.test(originUrl)
+            && wanted.includes(getAppNameFromUrl(originUrl))
+        ) {
             const redirectIndex = getRedirectUrl(requestDetail.url)
             const newResponse = responseDetail.response;
             const body = newResponse.body.toString();
@@ -66,7 +109,7 @@ module.exports = {
             const logStr = `redirect ${requestDetail.url} to ${redirectAppUrl}`;
 
             console.time(logStr);
-            console.info('start ' + logStr);
+            console.info(`start ${logStr} \r\n`);
 
             return rp({url: redirectAppUrl, headers: requestDetail.requestOptions.headers}).then(html => {
                 let newRedirectHtml = html.replace('__config', '__configOriginal');
@@ -74,7 +117,7 @@ module.exports = {
                 console.timeEnd(logStr);
                 return {response: newResponse};
             }).catch(err => {
-                console.error(`request ${redirectAppUrl} error: `, err.message);
+                console.error(`Error ${redirectAppUrl}\r\n`);
                 throw err;
             });
         }
